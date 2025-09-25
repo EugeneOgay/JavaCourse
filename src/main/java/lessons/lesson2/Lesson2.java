@@ -37,7 +37,7 @@ public class Lesson2 {
             result = result * i;
         }
 
-        System.out.println("Произведение чисел от 1 до " + number + " равна " + result);
+        System.out.println("Произведение чисел от 1 до " + number + " равно " + result);
     }
 
     public static void SumOfEvenNumbers() {
@@ -73,5 +73,43 @@ public class Lesson2 {
         System.out.println("Сумма цифр введенного числа " + number + " равна " + sum);
     }
 
+    public static void DigitsRotate() {
+        Scanner scanner = new Scanner(System.in);
 
+        System.out.print("Введите число: ");
+        String number = scanner.nextLine();
+        char[] digitsArray = number.toCharArray();
+
+        var revertedDigitsArray = new char[number.length()];
+
+        for (int i = 0; i < number.length(); i++) {
+            for(int k = number.length() - 1 - i; k >= 0; k--) {
+                revertedDigitsArray[k] = digitsArray[i];
+            }
+        }
+
+        String revertedNumber = new String(revertedDigitsArray);
+
+        System.out.println("Развернутое число " + number + " равно " + revertedNumber);
+    }
+
+    public static void FactorialOfNumber() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите число: ");
+        int number = scanner.nextInt();
+
+        while (number <= 0) {
+            System.out.print("Введенное число должно быть натуральным(больше 0) \n");
+            System.out.print("Введите число: ");
+            number = scanner.nextInt();
+        }
+
+        int result = 1;
+        for (int i = 2; i <= number; i++) {
+            result = result * i;
+        }
+
+        System.out.println("Факториал числа " + number + " равен " + result);
+    }
 }

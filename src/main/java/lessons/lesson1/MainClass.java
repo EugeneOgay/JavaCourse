@@ -11,5 +11,7 @@ public class MainClass {
         //Lesson2.MultiplicationOfNumbers();
         //Lesson2.SumOfEvenNumbers();
         //Lesson2.SumOfDigits();
+        //Lesson2.DigitsRotate();
+        Lesson2.FactorialOfNumber();
     }
 }

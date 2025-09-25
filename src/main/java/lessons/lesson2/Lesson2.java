@@ -18,6 +18,12 @@ public class Lesson2 {
         System.out.print("Введите число: ");
         int number = scanner.nextInt();
 
+        while (number <= 1) {
+            System.out.print("Введенное число должно быть больше 1 \n");
+            System.out.print("Введите число: ");
+            number = scanner.nextInt();
+        }
+
         int sum = 0;
         for (int i = 1; i <= number; i++) {
             sum = sum + i;
@@ -32,6 +38,12 @@ public class Lesson2 {
         System.out.print("Введите число: ");
         int number = scanner.nextInt();
 
+        while (number <= 1) {
+            System.out.print("Введенное число должно быть больше 1 \n");
+            System.out.print("Введите число: ");
+            number = scanner.nextInt();
+        }
+
         int result = 1;
         for (int i = 2; i <= number; i++) {
             result = result * i;
@@ -45,6 +57,12 @@ public class Lesson2 {
 
         System.out.print("Введите число: ");
         int number = scanner.nextInt();
+
+        while (number <= 1) {
+            System.out.print("Введенное число должно быть больше 1 \n");
+            System.out.print("Введите число: ");
+            number = scanner.nextInt();
+        }
 
         int sum = 0;
         for (int i = 1; i <= number; i++) {
@@ -111,5 +129,43 @@ public class Lesson2 {
         }
 
         System.out.println("Факториал числа " + number + " равен " + result);
+    }
+
+    public static void FirstOfNumbers() {
+        int number = 1000;
+        do {
+            number++;
+        } while( number % 7 != 0);
+
+
+        System.out.print("Первое число что делится на 7 и больше 1000 это' " + number);
+    }
+
+    public static void CommonNumbers() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите число: ");
+        int number = scanner.nextInt();
+
+        while (number <= 1) {
+            System.out.print("Введенное число должно быть больше 1 \n");
+            System.out.print("Введите число: ");
+            number = scanner.nextInt();
+        }
+
+        System.out.print("Простые числа от 2 до  " + number + ": ");
+
+        for (int i = 2; i <= number; i++) {
+            boolean commonState = true;
+            for(int k = 2; k < i; k++) {
+                if( i % k == 0) {
+                    commonState = false;
+                    break;
+                }
+            }
+            if(commonState) {
+                System.out.print(i + " ");
+            }
+        }
     }
 }

@@ -6,7 +6,7 @@ public class MainClass {
 
     public static void main(String[] args) {
 
-        System.out.println("Hello METANIT.COM!");
-
+        lesson2 obj = new lesson2();
+        obj.Numbers();
     }
 }

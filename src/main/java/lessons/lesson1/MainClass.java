@@ -15,5 +15,12 @@ public class MainClass {
         //Lesson2.FactorialOfNumber();
         //Lesson2.FirstOfNumbers();
         //Lesson2.CommonNumbers();
+        //Lesson2.Stars();
+        //Lesson2.NumbersChanging();
+        //Lesson2.Multiplication();
+        //Lesson2.CurrencyExchange();
+        //Lesson2.EvenOrOdd();
+        //Lesson2.MaxOfThree();
+        Lesson2.Calculator();
     }
 }

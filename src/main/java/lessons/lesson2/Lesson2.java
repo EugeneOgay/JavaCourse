@@ -1,6 +1,7 @@
 package main.java.lessons.lesson2;
 
 import java.util.Scanner;
+import java.util.random.RandomGenerator;
 
 public class Lesson2 {
     public static void NumbersRow() {
@@ -242,7 +243,8 @@ public class Lesson2 {
             amount = scanner.nextInt();
         }
 
-       System.out.println("Перевод " + amount +" долларов в сумы по курсу " + exchange + " равен: " + (amount * exchange));
+       System.out.println("Перевод " + amount +" долларов в сумы по курсу " + exchange + " равен: "
+           + (amount * exchange));
     }
 
     public static void EvenOrOdd() {
@@ -298,5 +300,92 @@ public class Lesson2 {
         }
     }
 
+
+    public static void ArithmeticMean() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите количество чисел которые желаете ввести: ");
+        int length = scanner.nextInt();
+
+        while (length <= 0) {
+            System.out.print("Введенное количество чисел не должно быть меньше 0 \n");
+            System.out.print("Введите количество чисел которые желаете ввести: ");
+            length = scanner.nextInt();
+        }
+
+        int[] arrayOfNumbers = new int[length];
+        int sum = 0;
+        for (int i  = 0; i < arrayOfNumbers.length; i++) {
+            System.out.print("Введите "+ (i + 1) + " число: ");
+            arrayOfNumbers[i] = scanner.nextInt();
+            sum = sum + arrayOfNumbers[i];
+        }
+        double arithmeticMean = (double) sum /length;
+
+        System.out.print("Среднее арифметическое введенных чисел равно:  " + arithmeticMean);
+    }
+
+    public static void ElementSearch() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите количество чисел которые желаете ввести: ");
+        int length = scanner.nextInt();
+
+        while (length <= 0) {
+            System.out.print("Введенное количество чисел не должно быть меньше 0 \n");
+            System.out.print("Введите количество чисел которые желаете ввести: ");
+            length = scanner.nextInt();
+        }
+
+        int[] arrayOfNumbers = new int[length];
+        for (int i  = 0; i < arrayOfNumbers.length; i++) {
+            System.out.print("Введите "+ (i + 1) + " число: ");
+            arrayOfNumbers[i] = scanner.nextInt();
+        }
+
+        System.out.print("Введите число которое хотите поискать в ряде ранее введенных чисел: ");
+        scanner = new Scanner(System.in);
+        int number = scanner.nextInt();
+
+        boolean present = false;
+        for (int i  = 0; i < arrayOfNumbers.length; i++) {
+            if(arrayOfNumbers[i] == number) {
+                present = true;
+                System.out.println("Число " + number + " есть среди ранее введенных и было введено "
+                    + (i + 1) + "м по счету");
+            } 
+        }
+        if (!present) {
+            System.out.print("Число " + number + " отсутсвует среди ранее введенных");
+        }
+    }
+
+    public static void GuessTheNumber() {
+        int randomNumber = RandomGenerator.getDefault().nextInt(100);
+
+        boolean repeat = false;
+        boolean found = false;
+        do {
+            Scanner scanner = new Scanner(System.in);
+            for (int i = 0; i < 4; i++){
+                System.out.print("Попробуйте угадать число от 0 до 100: ");
+                int number = scanner.nextInt();
+                if (number == randomNumber) {
+                    found = true;
+                    System.out.println("Вы угадали число - " + randomNumber);
+                    break;
+                }
+            }
+
+            if(!found){
+                System.out.print("Желаете повторить операцию(да/нет): ");
+                scanner = new Scanner(System.in);
+                String userChoice = scanner.nextLine();
+                repeat = userChoice.equalsIgnoreCase("да");
+            }
+
+        } while (repeat);
+
+    }
 
 }

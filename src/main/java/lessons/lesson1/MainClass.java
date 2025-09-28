@@ -21,6 +21,10 @@ public class MainClass {
         //Lesson2.CurrencyExchange();
         //Lesson2.EvenOrOdd();
         //Lesson2.MaxOfThree();
-        Lesson2.Calculator();
+        //Lesson2.Calculator();
+        //Lesson2.ArithmeticMean();
+        //Lesson2.ElementSearch();
+        //Lesson2.GuessTheNumber();
+
     }
 }

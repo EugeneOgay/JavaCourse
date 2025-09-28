@@ -25,6 +25,6 @@ public class MainClass {
         //Lesson2.ArithmeticMean();
         //Lesson2.ElementSearch();
         //Lesson2.GuessTheNumber();
-
+        //Lesson2.Quest();
     }
 }

@@ -293,7 +293,7 @@ public class Lesson2 {
         String operation = scanner.nextLine();
 
         switch (operation) {
-            case "+" ->  System.out.println("Cумма введенных чисел равна: " + (number1 + number2));
+            case "+" ->  System.out.println("Сумма введенных чисел равна: " + (number1 + number2));
             case "-" ->  System.out.println("Разность введенных чисел равна: " + (number1 - number2));
             case "*" ->  System.out.println("Произведение введенных чисел равно: " + (number1 * number2));
             case "/" ->  System.out.println("Частное введенных чисел равно: " + ((number1 / number2)));

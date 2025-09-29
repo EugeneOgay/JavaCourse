@@ -14,9 +14,7 @@ public class MainClass {
         int lesson = scanner.nextInt();
 
         switch (lesson) {
-            case 1 -> {
-                System.out.print("Первый урок был ознакомительным и практических заданий не было)");
-            }
+            case 1 -> System.out.print("Первый урок был ознакомительным и практических заданий не было)");
             case 2 -> {
                 System.out.println("\nЗадания:\n" +
                     "1.Квест игра «Тень над Озером» \n" +

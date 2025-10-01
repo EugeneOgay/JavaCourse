@@ -9,10 +9,10 @@ public class Rectangle {
         this.width  = width;
     }
 
-    public void CalculateSquare() {
-        System.out.printf("Площадь прямоугольника равна %d\n", (length * width));
+    public int CalculateSquare() {
+        return length * width;
     }
-    public void CalculatePerimeter() {
-        System.out.printf("Периметр прямоугольника равен %d", (length + width + length + width));
+    public int CalculatePerimeter() {
+        return length + width + length + width;
     }
 }

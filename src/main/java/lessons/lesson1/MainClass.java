@@ -1,6 +1,7 @@
 package main.java.lessons.lesson1;
 
 import main.java.lessons.lesson2.Lesson2;
+import main.java.lessons.lesson3.Car;
 import main.java.lessons.lesson3.Person;
 import main.java.lessons.lesson3.Rectangle;
 
@@ -40,7 +41,7 @@ public class MainClass {
                     "19.Поиск элемента\n" +
                     "20.Мини-игра \"Угадай число\"\n");
 
-                System.out.print("Введите номер урока: ");
+                System.out.print("Введите номер задания: ");
                 int task = scanner.nextInt();
                 switch (task){
                     case 1 -> Lesson2.Quest();
@@ -89,7 +90,7 @@ public class MainClass {
 //                    "19.Поиск элемента\n" +
 //                    "20.Мини-игра \"Угадай число\"\n");
 
-                System.out.print("Введите номер урока: ");
+                System.out.print("Введите номер задания: ");
                 int task = scanner.nextInt();
                 switch (task){
                     case 1 -> {
@@ -109,10 +110,21 @@ public class MainClass {
                         System.out.print("Введите ширину прямоугольника: ");
                         int width = scanner.nextInt();
                         Rectangle rectangle = new Rectangle(length, width);
-                        rectangle.CalculateSquare();
-                        rectangle.CalculatePerimeter();
+                        System.out.printf("Площадь прямоугольника равна %d\n", rectangle.CalculateSquare());
+                        System.out.printf("Периметр прямоугольника равен %d", rectangle.CalculatePerimeter());
                     }
-//                    case 3 -> Lesson2.SumOfNumbers();
+                    case 3 -> {
+                        System.out.print("Введите данные о машине!\n");
+                        Scanner stringScanner = new Scanner(System.in);
+                        System.out.print("Страна: ");
+                        String county = stringScanner.nextLine();
+                        System.out.print("Модель: ");
+                        String model = stringScanner.nextLine();
+                        System.out.print("Год: ");
+                        int yearOfManufacture = stringScanner.nextInt();
+                        Car car = new Car(county, model, yearOfManufacture);
+                        Car.PrintCarInfo(car);
+                    }
 //                    case 4 -> Lesson2.MultiplicationOfNumbers();
 //                    case 5 -> Lesson2.SumOfEvenNumbers();
 //                    case 6 -> Lesson2.SumOfDigits();

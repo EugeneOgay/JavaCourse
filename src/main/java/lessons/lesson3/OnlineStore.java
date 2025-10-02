@@ -25,9 +25,12 @@ public class OnlineStore {
             if(product.name.equalsIgnoreCase(name)) {
                 if(product.count > 0 && product.count >= amount) {
                     product.count = product.count - amount;
+                    if (product.count == 0) {
+                        products.remove(product);
+                    }
                     return;
                 } else {
-                    System.out.println("Недостаточно товара\n");
+                    System.out.printf("Недостаточно количество товара %s\n", product.name);
                     return;
                 }
             }

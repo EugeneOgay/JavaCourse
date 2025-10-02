@@ -2,6 +2,7 @@ package main.java.lessons.lesson1;
 
 import main.java.lessons.lesson2.Lesson2;
 import main.java.lessons.lesson3.BankAccount;
+import main.java.lessons.lesson3.BankSystem;
 import main.java.lessons.lesson3.Book;
 import main.java.lessons.lesson3.Car;
 import main.java.lessons.lesson3.OnlineStore;
@@ -78,9 +79,9 @@ public class MainClass {
                         "2.Класс Rectangle\n" +
                         "3.Класс Car\n" +
                         "4.Класс BankAccount\n" +
-                        "5.Класс Book\n" //+
-//                    "6.Сумма цифр числа (например, 1234 → 10).\n" +
-//                    "7.Разворот числа (например, 1234 → 4321).\n" +
+                        "5.Класс Book\n" +
+                        "6.Класс OnlineStore\n" +
+                        "7.Класс BankSystem\n" //+
 //                    "8.Найти факториал N (через цикл, не рекурсией).\n" +
 //                    "9.Найти первое число, которое делится на 7 и больше 1000.\n" +
                     );
@@ -150,15 +151,27 @@ public class MainClass {
                         OnlineStore.AddProduct(new OnlineStore.Product("456", "груша", 200, 3));
                         OnlineStore.AddProduct(new OnlineStore.Product("123", "яблоко", 100, 4));
                         OnlineStore.GetProducts();
+                        OnlineStore.GetProductInfo("яблоко");
                         OnlineStore.BuyProduct("яблоко", 10);
                         OnlineStore.BuyProduct("яблоко", 6);
                         OnlineStore.BuyProduct("хурма", 6);
                         OnlineStore.GetProducts();
                         OnlineStore.GetProductInfo("хурма");
-                        OnlineStore.GetProductInfo("яблоко");
-
                     }
-//                    case 7 -> Lesson2.DigitsRotate();
+                    case 7 -> {
+                        BankSystem.AddAccount(new BankSystem.Account(1,  "ololo", 10));
+                        BankSystem.AddAccount(new BankSystem.Account(2,  "tomas", 20));
+                        BankSystem.AddAccount(new BankSystem.Account(3,  "chris", 30));
+                        BankSystem.DeleteAccount(new BankSystem.Account(4,  "chris", 30));
+                        BankSystem.DeleteAccount(new BankSystem.Account(3,  "chris", 30));
+                        BankSystem.ReplenishAccount(1, 40);
+                        BankSystem.GetAccountInfo(3);
+                        BankSystem.GetAccountInfo(1);
+                        BankSystem.TransferMoneyBetweenAccounts(1, 2, 60);
+                        BankSystem.TransferMoneyBetweenAccounts(1, 2, 30);
+                        BankSystem.GetAccountInfo(1);
+                        BankSystem.GetAccountInfo(2);
+                    }
 //                    case 8 -> Lesson2.FactorialOfNumber();
 //                    case 9 -> Lesson2.FirstOfNumbers();
                     default -> System.out.print("Нет задания под этим номером");

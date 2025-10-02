@@ -8,6 +8,7 @@ import main.java.lessons.lesson3.Car;
 import main.java.lessons.lesson3.OnlineStore;
 import main.java.lessons.lesson3.Person;
 import main.java.lessons.lesson3.Rectangle;
+import main.java.lessons.lesson3.StreetFighter;
 
 import java.util.Scanner;
 
@@ -81,9 +82,8 @@ public class MainClass {
                         "4.Класс BankAccount\n" +
                         "5.Класс Book\n" +
                         "6.Класс OnlineStore\n" +
-                        "7.Класс BankSystem\n" //+
-//                    "8.Найти факториал N (через цикл, не рекурсией).\n" +
-//                    "9.Найти первое число, которое делится на 7 и больше 1000.\n" +
+                        "7.Класс BankSystem\n" +
+                        "8.Компьютерная игра (StreetFighter)\n"
                     );
 
                 System.out.print("Введите номер задания: ");
@@ -172,8 +172,15 @@ public class MainClass {
                         BankSystem.GetAccountInfo(1);
                         BankSystem.GetAccountInfo(2);
                     }
-//                    case 8 -> Lesson2.FactorialOfNumber();
-//                    case 9 -> Lesson2.FirstOfNumbers();
+                    case 8 -> {
+                        StreetFighter.AddAFighter(new StreetFighter.Fighter(1, "Shiva", 100, 10));
+                        StreetFighter.AddAFighter(new StreetFighter.Fighter(2, "Axel", 100, 15));
+                        StreetFighter.AddAFighter(new StreetFighter.Fighter(3, "Blaze", 120, 8));
+                        StreetFighter.GetFighters();
+                        StreetFighter.Fight("Shiva", "Axel");
+                        StreetFighter.GetFighterInfo("Axel");
+                        StreetFighter.GetFighterInfo("Shiva");
+                    }
                     default -> System.out.print("Нет задания под этим номером");
                 }
             }

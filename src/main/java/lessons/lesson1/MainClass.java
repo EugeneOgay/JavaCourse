@@ -4,6 +4,7 @@ import main.java.lessons.lesson2.Lesson2;
 import main.java.lessons.lesson3.BankAccount;
 import main.java.lessons.lesson3.Book;
 import main.java.lessons.lesson3.Car;
+import main.java.lessons.lesson3.OnlineStore;
 import main.java.lessons.lesson3.Person;
 import main.java.lessons.lesson3.Rectangle;
 
@@ -144,7 +145,19 @@ public class MainClass {
                         Book.GetBooks();
                         book2.GetBookInfo();
                     }
-//                    case 6 -> Lesson2.SumOfDigits();
+                    case 6 -> {
+                        OnlineStore.AddProduct(new OnlineStore.Product("123", "яблоко", 100, 2));
+                        OnlineStore.AddProduct(new OnlineStore.Product("123", "груша", 200, 3));
+                        OnlineStore.AddProduct(new OnlineStore.Product("123", "яблоко", 100, 4));
+                        OnlineStore.GetProducts();
+                        OnlineStore.BuyProduct("яблоко", 10);
+                        OnlineStore.BuyProduct("яблоко", 6);
+                        OnlineStore.BuyProduct("хурма", 6);
+                        OnlineStore.GetProducts();
+                        OnlineStore.GetProductInfo("хурма");
+                        OnlineStore.GetProductInfo("яблоко");
+
+                    }
 //                    case 7 -> Lesson2.DigitsRotate();
 //                    case 8 -> Lesson2.FactorialOfNumber();
 //                    case 9 -> Lesson2.FirstOfNumbers();

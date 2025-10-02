@@ -23,6 +23,4 @@ public class BankAccount {
     public void GetBalance() {
         System.out.printf("У пользователя %s на %d счету - %d UZS\n", fio, accountNumber, balance);
     }
-    //Метод: deposit(), withdraw(), getBalance()
-
 }

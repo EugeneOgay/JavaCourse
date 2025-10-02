@@ -1,6 +1,7 @@
 package main.java.lessons.lesson1;
 
 import main.java.lessons.lesson2.Lesson2;
+import main.java.lessons.lesson3.BankAccount;
 import main.java.lessons.lesson3.Car;
 import main.java.lessons.lesson3.Person;
 import main.java.lessons.lesson3.Rectangle;
@@ -121,11 +122,26 @@ public class MainClass {
                         System.out.print("Модель: ");
                         String model = stringScanner.nextLine();
                         System.out.print("Год: ");
-                        int yearOfManufacture = stringScanner.nextInt();
+                        int yearOfManufacture = scanner.nextInt();
                         Car car = new Car(county, model, yearOfManufacture);
                         Car.PrintCarInfo(car);
                     }
-//                    case 4 -> Lesson2.MultiplicationOfNumbers();
+                    case 4 -> {
+                        System.out.print("Введите данные об аккаунте!\n");
+                        Scanner stringScanner = new Scanner(System.in);
+                        System.out.print("ФИО: ");
+                        String fio = stringScanner.nextLine();
+                        System.out.print("Номер аккаунта: ");
+                        long accountNumber = scanner.nextLong();
+                        System.out.print("Баланс: ");
+                        int balance = scanner.nextInt();
+                        BankAccount bankAccount = new BankAccount(fio, accountNumber, balance);
+                        bankAccount.GetBalance();
+                        bankAccount.Deposit(5000);
+                        bankAccount.GetBalance();
+                        bankAccount.Withdraw(10000);
+                        bankAccount.GetBalance();
+                    }
 //                    case 5 -> Lesson2.SumOfEvenNumbers();
 //                    case 6 -> Lesson2.SumOfDigits();
 //                    case 7 -> Lesson2.DigitsRotate();

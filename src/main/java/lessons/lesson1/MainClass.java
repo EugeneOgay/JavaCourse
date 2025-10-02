@@ -147,7 +147,7 @@ public class MainClass {
                     }
                     case 6 -> {
                         OnlineStore.AddProduct(new OnlineStore.Product("123", "яблоко", 100, 2));
-                        OnlineStore.AddProduct(new OnlineStore.Product("123", "груша", 200, 3));
+                        OnlineStore.AddProduct(new OnlineStore.Product("456", "груша", 200, 3));
                         OnlineStore.AddProduct(new OnlineStore.Product("123", "яблоко", 100, 4));
                         OnlineStore.GetProducts();
                         OnlineStore.BuyProduct("яблоко", 10);

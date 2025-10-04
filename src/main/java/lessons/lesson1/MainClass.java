@@ -9,10 +9,9 @@ import main.java.lessons.lesson3.OnlineStore;
 import main.java.lessons.lesson3.Person;
 import main.java.lessons.lesson3.Rectangle;
 import main.java.lessons.lesson3.StreetFighter;
+import main.java.lessons.lesson5.trainingCenter.TrainingCenter;
 
 import java.util.Scanner;
-
-import static main.java.lessons.lesson3.Book.books;
 
 public class MainClass {
 
@@ -181,6 +180,26 @@ public class MainClass {
                         StreetFighter.GetFighterInfo("Axel");
                         StreetFighter.GetFighterInfo("Shiva");
                     }
+                    default -> System.out.print("Нет задания под этим номером");
+                }
+            }
+            case 4 -> System.out.print("Четвертый урок был посвящен гиту и практических заданий не было)");
+            case 5 ->  {
+                System.out.println("\nЗадания:\n" +
+                    "1.Класс Person \n" +
+                    "2.Класс Rectangle\n"
+                );
+
+                int task = scanner.nextInt();
+                switch (task){
+                    case 1 -> {
+                        TrainingCenter.SetTeachers();
+
+                    }
+                    case 2 -> {
+
+                    }
+
                     default -> System.out.print("Нет задания под этим номером");
                 }
             }

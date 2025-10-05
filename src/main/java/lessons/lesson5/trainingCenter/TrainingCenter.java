@@ -8,7 +8,11 @@ public class TrainingCenter {
     static ArrayList<Teacher> teachers = new ArrayList<>();
 
     public static void SetTeachers() {
-        teachers.add(new Teacher("John", "Math", true));
+        teachers.add(new Teacher("John", "Math", false));
+        teachers.add(new Teacher("Eddie", "Biology", true));
+        teachers.add(new Teacher("Tom", "Chemistry", true));
+        teachers.add(new Teacher("Dave", "Math", true));
+        teachers.add(new Teacher("James", "Biology", false));
     }
 
     public static void addTeacher(Teacher teacher) {
@@ -16,11 +20,39 @@ public class TrainingCenter {
     }
 
     public static void SetStudents() {
-        students.add(new Student("Bill", "Biology",  false));
+        students.add(new Student("Michael", "Math",  true));
+        students.add(new Student("Bill", "Biology",  true));
+        students.add(new Student("Robert", "Math",  false));
+        students.add(new Student("William", "Biology",  true));
+        students.add(new Student("David", "Math",  false));
+        students.add(new Student("Joseph", "Biology",  false));
+        students.add(new Student("Charles", "Math",  false));
+        students.add(new Student("Daniel", "Biology",  false));
+        students.add(new Student("Andrew", "Math",  false));
+        students.add(new Student("Ryan", "Biology",  false));
+    }
+
+    public static void addStudent(Student student) {
+        students.add(student);
+    }
+
+    public static void GetCourses() {
+        if(courses.isEmpty()) {
+            System.out.println("На текущий момент нет активных курсов");
+            return;
+        }
+        System.out.println("Список активных курсов: \n");
+        for(Course course : courses){
+            System.out.printf("%s\n", course.getSubject());
+        }
+    }
+
+    public static void GetTeachers() {
+
     }
 
     public static void CreateCourse(String courseSubject, String courseTeacherName) {
-        boolean courseExist;
+        boolean courseExist = false;
         Teacher courseTeacher = null;
 
         for(Teacher teacher : teachers) {
@@ -45,7 +77,5 @@ public class TrainingCenter {
         }
 
         courses.add(new Course(courseSubject, courseTeacher, readyToEnrollStudents));
-
-
     }
 }

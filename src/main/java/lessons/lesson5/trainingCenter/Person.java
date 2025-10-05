@@ -1,6 +1,6 @@
 package main.java.lessons.lesson5.trainingCenter;
 
-public class Person {
+abstract class Person {
 
     private String name;
 
@@ -15,4 +15,6 @@ public class Person {
     public String GetName() {
         return name;
     }
+
+    public abstract void ShowInfo();
 }

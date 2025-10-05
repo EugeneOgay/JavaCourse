@@ -16,6 +16,12 @@ public class Student extends Person{
         return super.GetName();
     }
 
+    @Override
+    public void ShowInfo() {
+        String enrolled;
+        System.out.printf("Имя: %s, предмет: %s, уже занят: %s", GetName(), GetChosenSubject(), enrolled = GetStatus() ? "да" : "нет");
+    }
+
     public String GetChosenSubject() {
         return chosenSubject;
     }

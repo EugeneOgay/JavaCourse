@@ -16,6 +16,12 @@ public class Teacher extends Person {
         return super.GetName();
     }
 
+    @Override
+    public void ShowInfo() {
+        String ready;
+        System.out.printf("Имя: %s, предмет: %s, свободен: %s", GetName(), GetSubject(), ready = GetStatus() ? "да" : "нет");
+    }
+
     public String GetSubject() {
         return subject;
     }

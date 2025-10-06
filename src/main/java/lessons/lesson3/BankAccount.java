@@ -1,9 +1,9 @@
 package main.java.lessons.lesson3;
 
 public class BankAccount {
-    String fio;
-    long accountNumber;
-    int balance;
+    private String fio;
+    private long accountNumber;
+    private int balance;
 
     public BankAccount(String fio, long accountNumber, int balance) {
         this.fio = fio;

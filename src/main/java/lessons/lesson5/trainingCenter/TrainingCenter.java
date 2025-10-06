@@ -43,39 +43,109 @@ public class TrainingCenter {
         }
         System.out.println("Список активных курсов: \n");
         for(Course course : courses){
-            System.out.printf("%s\n", course.getSubject());
+            System.out.printf("%s\n", course.GetSubject());
         }
     }
 
     public static void GetTeachers() {
-
+        if(teachers.isEmpty()) {
+            System.out.println("Нет учителей");
+            return;
+        }
+        System.out.println("Список учителей: \n");
+        for (Teacher teacher : teachers){
+            teacher.ShowInfo();
+        }
     }
 
+    public void GetStudents() {
+        if(students.isEmpty()) {
+            System.out.println("Нет студентов");
+            return;
+        }
+        System.out.println("Список студентов: \n");
+        for (Student student : students){
+            student.ShowInfo();
+        }
+    }
+
+//    public static void CreateCourse(String courseSubject, String courseTeacherName) {
+//        boolean courseExist = false;
+//        Teacher courseTeacher = null;
+//
+//        for(Teacher teacher : teachers) {
+//            if(teacher.GetSubject().equalsIgnoreCase(courseSubject)) {
+//                courseExist = true;
+//                if(teacher.GetName().equalsIgnoreCase(courseTeacherName)) {
+//                    if(teacher.GetStatus()) {
+//                        courseTeacher  = teacher;
+//                        teacher.MakeBusy(); // инкапсулировать в классе Teacher
+//                    } else System.out.printf("Учитель %s занят", teacher.GetName());
+//                }
+//            } else System.out.printf("Нет учителя что мог бы преподавать курс %s", courseSubject);
+//        }
+//
+//        ArrayList<Student> readyToEnrollStudents = new ArrayList<>();
+//        for(Student student : students) {
+//            if (student.GetChosenSubject().equalsIgnoreCase(courseSubject) && !student.GetStatus()){
+//                readyToEnrollStudents.add(student);
+//                student.GetEnrolled();
+//            } else {
+//                System.out.printf("Нет свободных студентов готовых записаться на курс %s", courseSubject);
+//                return;
+//            }
+//        }
+//
+//        courses.add(new Course(courseSubject, courseTeacher, readyToEnrollStudents));
+//    }
+
     public static void CreateCourse(String courseSubject, String courseTeacherName) {
-        boolean courseExist = false;
+        boolean courseExist = CourseExist(courseSubject);
         Teacher courseTeacher = null;
 
-        for(Teacher teacher : teachers) {
-            if(teacher.GetSubject().equalsIgnoreCase(courseSubject)) {
-                courseExist = true;
-                if(teacher.GetName().equalsIgnoreCase(courseTeacherName) && teacher.GetStatus()) {
-                    courseTeacher  = teacher;
-                    teacher.MakeBusy();
+        if (courseExist) {
+            for(Teacher teacher : teachers){
+                if (teacher.GetName().equalsIgnoreCase(courseTeacherName) && teacher.GetSubject().equalsIgnoreCase(courseSubject)) {
+                    if (teacher.GetStatus()) {
+                        courseTeacher  = teacher;
+                        break;
+                    } else System.out.printf("Учитель %s занят", teacher.GetName());
+                } else {
+                    System.out.println("Нет учителя с таким именем или учитель не преподает выбранный курс");
+                    return;
                 }
-            } else System.out.printf("Нет учителя что мог бы преподавать курс %s", courseSubject);
+            }
+        } else {
+            System.out.printf("Нет подобного курса %s", courseSubject);
+            return;
         }
 
         ArrayList<Student> readyToEnrollStudents = new ArrayList<>();
         for(Student student : students) {
             if (student.GetChosenSubject().equalsIgnoreCase(courseSubject) && !student.GetStatus()){
                 readyToEnrollStudents.add(student);
-                student.GetEnrolled();
+                //student.GetEnrolled();
             } else {
                 System.out.printf("Нет свободных студентов готовых записаться на курс %s", courseSubject);
                 return;
             }
         }
 
-        courses.add(new Course(courseSubject, courseTeacher, readyToEnrollStudents));
+        if (readyToEnrollStudents.isEmpty() || courseTeacher != null){
+            courses.add(new Course(courseSubject, courseTeacher, readyToEnrollStudents));
+            courseTeacher.MakeBusy();
+            for (Student student : readyToEnrollStudents) {
+                student.GetEnrolled();
+            }
+        }
+    }
+
+    private static boolean CourseExist(String courseSubject) {
+        for(Teacher teacher : teachers) {
+            if(teacher.GetSubject().equalsIgnoreCase(courseSubject)) return true;
+            }
+            System.out.printf("Нет учителя что мог бы преподавать курс %s", courseSubject);
+            return false;
     }
 }
+

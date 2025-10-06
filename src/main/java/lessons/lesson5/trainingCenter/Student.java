@@ -19,7 +19,7 @@ public class Student extends Person{
     @Override
     public void ShowInfo() {
         String enrolled;
-        System.out.printf("Имя: %s, предмет: %s, уже занят: %s", GetName(), GetChosenSubject(), enrolled = GetStatus() ? "да" : "нет");
+        System.out.printf("Имя: %s, предмет: %s, уже занят: %s\n", GetName(), GetChosenSubject(), enrolled = GetStatus() ? "да" : "нет");
     }
 
     public String GetChosenSubject() {
@@ -32,6 +32,6 @@ public class Student extends Person{
 
     public void GetEnrolled() {
         if(!alreadyEnrolled) { alreadyEnrolled = true; }
-        else System.out.printf("Студент %s уже записан на другой курс", GetName());
+        else System.out.printf("Студент %s уже записан на другой курс\n", GetName());
     }
 }

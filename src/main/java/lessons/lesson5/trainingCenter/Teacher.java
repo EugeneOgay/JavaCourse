@@ -19,7 +19,7 @@ public class Teacher extends Person {
     @Override
     public void ShowInfo() {
         String ready;
-        System.out.printf("Имя: %s, предмет: %s, свободен: %s", GetName(), GetSubject(), ready = GetStatus() ? "да" : "нет");
+        System.out.printf("Имя: %s, предмет: %s, свободен: %s\n", GetName(), GetSubject(), ready = GetStatus() ? "да" : "нет");
     }
 
     public String GetSubject() {
@@ -28,7 +28,7 @@ public class Teacher extends Person {
 
     public void MakeBusy() {
         if(free){ free = false; }
-        else System.out.printf("Преподаватель %s уже занят", GetName());
+        else System.out.printf("Преподаватель %s уже занят\n", GetName());
     }
 
     public boolean GetStatus() {

@@ -194,7 +194,23 @@ public class MainClass {
                 switch (task){
                     case 1 -> {
                         TrainingCenter.SetTeachers();
-
+                        TrainingCenter.SetStudents();
+                        TrainingCenter.GetTeachers();
+                        TrainingCenter.GetStudents();
+                        TrainingCenter.CreateCourse("Geometry", "ololo");
+                        TrainingCenter.CreateCourse("Math", "John");
+                        TrainingCenter.CreateCourse("Math", "Tom");
+                        TrainingCenter.CreateCourse("Math", "Dave");
+                        TrainingCenter.GetCourses();
+                        TrainingCenter.GetTeachers();
+                        TrainingCenter.GetStudents();
+                        TrainingCenter.GetCourseInfo("Geometry", "ololo");
+                        TrainingCenter.GetCourseInfo("Math", "Dave");
+                        TrainingCenter.ChangeGrade("Math", "Dave", "Robert", 50);
+                        TrainingCenter.ChangeGrade("Math", "Dave", "Andrew", 50);
+                        TrainingCenter.MarkPresence("Math", "Dave", "Robert", true);
+                        TrainingCenter.MarkPresence("Math", "Dave", "Andrew", true);
+                        TrainingCenter.GetCourseInfo("Math", "Dave");
                     }
                     case 2 -> {
 

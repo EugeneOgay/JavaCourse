@@ -27,21 +27,21 @@ public class Course {
         return lector.getName();
     }
 
-    public void getStudents() {
+    public void printStudents() {
         System.out.println("Список студентов курса: \n");
         for (Student student : students) {
             System.out.printf("Имя: %s\n", student.getName());
         }
     }
 
-    public void getGrades() {
+    public void printGrades() {
         System.out.println("Журнал успеваемости: \n");
         for(Map.Entry<String, Integer> currentGrades : grades.entrySet()){
             System.out.printf("Студент: %s, оценка: %d\n", currentGrades.getKey(), currentGrades.getValue());
         }
     }
 
-    public void getPresence() {
+    public void printPresence() {
         System.out.println("Журнал плсещаемости: \n");
         for(Map.Entry<String, Boolean> currentPresence : presence.entrySet()){
             System.out.printf("Студент: %s, присутствует: %s\n", currentPresence.getKey(), currentPresence.getValue() == true ? "да" : "нет");
@@ -51,9 +51,9 @@ public class Course {
     public void getCourseInfo() {
         System.out.printf("Курс: %s\n", getSubject());
         System.out.printf("Учитель: %s\n", getLectorName());
-        getStudents();
-        getGrades();
-        getPresence();
+        printStudents();
+        printGrades();
+        printPresence();
     }
 
     public Map<String, Integer> setDefaultGrades(ArrayList<Student> students) {

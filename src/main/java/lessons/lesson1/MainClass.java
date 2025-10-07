@@ -193,24 +193,25 @@ public class MainClass {
                 int task = scanner.nextInt();
                 switch (task){
                     case 1 -> {
-                        TrainingCenter.SetTeachers();
-                        TrainingCenter.SetStudents();
-                        TrainingCenter.GetTeachers();
-                        TrainingCenter.GetStudents();
-                        TrainingCenter.CreateCourse("Geometry", "ololo");
-                        TrainingCenter.CreateCourse("Math", "John");
-                        TrainingCenter.CreateCourse("Math", "Tom");
-                        TrainingCenter.CreateCourse("Math", "Dave");
-                        TrainingCenter.GetCourses();
-                        TrainingCenter.GetTeachers();
-                        TrainingCenter.GetStudents();
-                        TrainingCenter.GetCourseInfo("Geometry", "ololo");
-                        TrainingCenter.GetCourseInfo("Math", "Dave");
-                        TrainingCenter.ChangeGrade("Math", "Dave", "Robert", 50);
-                        TrainingCenter.ChangeGrade("Math", "Dave", "Andrew", 50);
-                        TrainingCenter.MarkPresence("Math", "Dave", "Robert", true);
-                        TrainingCenter.MarkPresence("Math", "Dave", "Andrew", true);
-                        TrainingCenter.GetCourseInfo("Math", "Dave");
+                        TrainingCenter trainingCenter = new TrainingCenter();
+                        trainingCenter.setTeachers();
+                        trainingCenter.setStudents();
+                        trainingCenter.getTeachers();
+                        trainingCenter.getStudents();
+                        trainingCenter.createCourse("Geometry", "ololo");
+                        trainingCenter.createCourse("Math", "John");
+                        trainingCenter.createCourse("Math", "Tom");
+                        trainingCenter.createCourse("Math", "Dave");
+                        trainingCenter.getCourses();
+                        trainingCenter.getTeachers();
+                        trainingCenter.getStudents();
+                        trainingCenter.getCourseInfo("Geometry", "ololo");
+                        trainingCenter.getCourseInfo("Math", "Dave");
+                        trainingCenter.changeGrade("Math", "Dave", "Robert", 50);
+                        trainingCenter.changeGrade("Math", "Dave", "Andrew", 50);
+                        trainingCenter.markPresence("Math", "Dave", "Robert", true);
+                        trainingCenter.markPresence("Math", "Dave", "Andrew", true);
+                        trainingCenter.getCourseInfo("Math", "Dave");
                     }
                     case 2 -> {
 

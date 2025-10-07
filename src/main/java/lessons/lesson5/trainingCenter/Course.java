@@ -5,11 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Course {
-    private String subject;
-    private Teacher lector;
-    private ArrayList<Student> students = new ArrayList<>();
-    private Map<String, Integer> grades = new HashMap<String, Integer>();
-    private Map<String, Boolean> presence = new HashMap<String, Boolean>();
+    private final String subject;
+    private final Teacher lector;
+    private final ArrayList<Student> students;
+    private Map<String, Integer> grades = new HashMap<>();
+    private Map<String, Boolean> presence = new HashMap<>();
 
     public Course(String subject, Teacher lector, ArrayList<Student> students) {
         this.subject = subject;
@@ -19,66 +19,66 @@ public class Course {
         this.presence = setDefaultPresence(students);
     }
 
-    public String GetSubject() {
+    public String getSubject() {
         return subject;
     }
 
-    public String GetLectorName() {
-        return lector.GetName();
+    public String getLectorName() {
+        return lector.getName();
     }
 
-    public void GetStudents() {
+    public void getStudents() {
         System.out.println("Список студентов курса: \n");
         for (Student student : students) {
-            System.out.printf("Имя: %s\n", student.GetName());
+            System.out.printf("Имя: %s\n", student.getName());
         }
     }
 
-    public void GetGrades() {
+    public void getGrades() {
         System.out.println("Журнал успеваемости: \n");
         for(Map.Entry<String, Integer> currentGrades : grades.entrySet()){
             System.out.printf("Студент: %s, оценка: %d\n", currentGrades.getKey(), currentGrades.getValue());
         }
     }
 
-    public void GetPresence() {
+    public void getPresence() {
         System.out.println("Журнал плсещаемости: \n");
         for(Map.Entry<String, Boolean> currentPresence : presence.entrySet()){
             System.out.printf("Студент: %s, присутствует: %s\n", currentPresence.getKey(), currentPresence.getValue() == true ? "да" : "нет");
         }
     }
 
-    public void GetCourseInfo() {
-        System.out.printf("Курс: %s\n", GetSubject());
-        System.out.printf("Учитель: %s\n", GetLectorName());
-        GetStudents();
-        GetGrades();
-        GetPresence();
+    public void getCourseInfo() {
+        System.out.printf("Курс: %s\n", getSubject());
+        System.out.printf("Учитель: %s\n", getLectorName());
+        getStudents();
+        getGrades();
+        getPresence();
     }
 
     public Map<String, Integer> setDefaultGrades(ArrayList<Student> students) {
-        Map<String, Integer> defaultGrades = new HashMap<String, Integer>();
+        Map<String, Integer> defaultGrades = new HashMap<>();
         for(Student student : students){
-            defaultGrades.put(student.GetName(), 0);
+            defaultGrades.put(student.getName(), 0);
         }
         return defaultGrades;
     }
 
     public Map<String, Boolean> setDefaultPresence(ArrayList<Student> students) {
-        Map<String, Boolean> defaultPresence = new HashMap<String, Boolean>();
+        Map<String, Boolean> defaultPresence = new HashMap<>();
         for(Student student : students){
-            defaultPresence.put(student.GetName(), false);
+            defaultPresence.put(student.getName(), false);
         }
         return defaultPresence;
     }
 
-    public void ChangeGrade(String studentName, int newGrade) {
+    public void changeGrade(String studentName, int newGrade) {
         if (grades.containsKey(studentName)){
             grades.replace(studentName, newGrade);
         } else System.out.println("Нет такого ученика\n");
     }
 
-    public void MarkPresence(String studentName, boolean present) {
+    public void markPresence(String studentName, boolean present) {
         if (presence.containsKey(studentName)){
             presence.replace(studentName, present);
         } else System.out.println("Нет такого ученика\n");

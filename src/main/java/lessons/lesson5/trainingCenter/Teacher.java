@@ -2,36 +2,30 @@ package main.java.lessons.lesson5.trainingCenter;
 
 public class Teacher extends Person {
 
-    private String subject;
-    private boolean free = true;
+    private final String subject;
+    private boolean available = true;
 
-    public Teacher(String name, String subject, boolean free) {
+    public Teacher(String name, String subject, boolean available) {
         super(name);
         this.subject = subject;
-        this.free = free;
+        this.available = available;
     }
 
     @Override
-    public String GetName() {
-        return super.GetName();
+    public void showInfo() {
+        System.out.printf("Имя: %s, предмет: %s, свободен: %s\n", getName(), getSubject(), getStatus() ? "да" : "нет");
     }
 
-    @Override
-    public void ShowInfo() {
-        String ready;
-        System.out.printf("Имя: %s, предмет: %s, свободен: %s\n", GetName(), GetSubject(), ready = GetStatus() ? "да" : "нет");
-    }
-
-    public String GetSubject() {
+    public String getSubject() {
         return subject;
     }
 
-    public void MakeBusy() {
-        if(free){ free = false; }
-        else System.out.printf("Преподаватель %s уже занят\n", GetName());
+    public void makeBusy() {
+        if(available){ available = false; }
+        else System.out.printf("Преподаватель %s уже занят\n", getName());
     }
 
-    public boolean GetStatus() {
-        return free;
+    public boolean getStatus() {
+        return available;
     }
 }

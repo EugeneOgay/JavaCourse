@@ -3,11 +3,11 @@ package main.java.lessons.lesson5.trainingCenter;
 import java.util.ArrayList;
 
 public class TrainingCenter {
-    static ArrayList<Course> courses = new ArrayList<>();
-    static ArrayList<Student> students = new ArrayList<>();
-    static ArrayList<Teacher> teachers = new ArrayList<>();
+    private final ArrayList<Course> courses = new ArrayList<>();
+    private final ArrayList<Student> students = new ArrayList<>();
+    private final ArrayList<Teacher> teachers = new ArrayList<>();
 
-    public static void SetTeachers() {
+    public void setTeachers() {
         teachers.add(new Teacher("John", "Math", false));
         teachers.add(new Teacher("Eddie", "Biology", true));
         teachers.add(new Teacher("Tom", "Chemistry", true));
@@ -15,11 +15,11 @@ public class TrainingCenter {
         teachers.add(new Teacher("James", "Biology", false));
     }
 
-    public static void addTeacher(Teacher teacher) {
+    public void addTeacher(Teacher teacher) {
         teachers.add(teacher);
     }
 
-    public static void SetStudents() {
+    public void setStudents() {
         students.add(new Student("Michael", "Math",  true));
         students.add(new Student("Bill", "Biology",  true));
         students.add(new Student("Robert", "Math",  false));
@@ -32,86 +32,55 @@ public class TrainingCenter {
         students.add(new Student("Ryan", "Biology",  false));
     }
 
-    public static void addStudent(Student student) {
+    public void addStudent(Student student) {
         students.add(student);
     }
 
-    public static void GetCourses() {
+    public void getCourses() {
         if(courses.isEmpty()) {
             System.out.println("На текущий момент нет активных курсов");
             return;
         }
         System.out.println("Список активных курсов: \n");
         for(Course course : courses){
-            System.out.printf("Предмет: %s, Учитель: %s\n", course.GetSubject(), course.GetLectorName());
+            System.out.printf("Предмет: %s, Учитель: %s\n", course.getSubject(), course.getLectorName());
         }
     }
 
-    public static void GetTeachers() {
+    public void getTeachers() {
         if(teachers.isEmpty()) {
             System.out.println("Нет учителей");
             return;
         }
         System.out.println("Список учителей: \n");
         for (Teacher teacher : teachers){
-            teacher.ShowInfo();
+            teacher.showInfo();
         }
     }
 
-    public static void GetStudents() {
+    public void getStudents() {
         if(students.isEmpty()) {
             System.out.println("Нет студентов");
             return;
         }
         System.out.println("Список студентов: \n");
         for (Student student : students){
-            student.ShowInfo();
+            student.showInfo();
         }
     }
 
-
-//    public static void CreateCourse(String courseSubject, String courseTeacherName) {
-//        boolean courseExist = false;
-//        Teacher courseTeacher = null;
-//
-//        for(Teacher teacher : teachers) {
-//            if(teacher.GetSubject().equalsIgnoreCase(courseSubject)) {
-//                courseExist = true;
-//                if(teacher.GetName().equalsIgnoreCase(courseTeacherName)) {
-//                    if(teacher.GetStatus()) {
-//                        courseTeacher  = teacher;
-//                        teacher.MakeBusy(); // инкапсулировать в классе Teacher
-//                    } else System.out.printf("Учитель %s занят", teacher.GetName());
-//                }
-//            } else System.out.printf("Нет учителя что мог бы преподавать курс %s", courseSubject);
-//        }
-//
-//        ArrayList<Student> readyToEnrollStudents = new ArrayList<>();
-//        for(Student student : students) {
-//            if (student.GetChosenSubject().equalsIgnoreCase(courseSubject) && !student.GetStatus()){
-//                readyToEnrollStudents.add(student);
-//                student.GetEnrolled();
-//            } else {
-//                System.out.printf("Нет свободных студентов готовых записаться на курс %s", courseSubject);
-//                return;
-//            }
-//        }
-//
-//        courses.add(new Course(courseSubject, courseTeacher, readyToEnrollStudents));
-//    }
-
-    public static void CreateCourse(String courseSubject, String courseTeacherName) {
-        boolean courseExist = CourseExist(courseSubject);
+    public void createCourse(String courseSubject, String courseTeacherName) {
+        boolean courseExist = courseExist(courseSubject);
         Teacher courseTeacher = null;
 
         if (courseExist) {
             for(Teacher teacher : teachers){
-                if (teacher.GetName().equalsIgnoreCase(courseTeacherName) && teacher.GetSubject().equalsIgnoreCase(courseSubject)) {
-                    if (teacher.GetStatus()) {
+                if (teacher.getName().equalsIgnoreCase(courseTeacherName) && teacher.getSubject().equalsIgnoreCase(courseSubject)) {
+                    if (teacher.getStatus()) {
                         courseTeacher  = teacher;
                         break;
                     } else {
-                        System.out.printf("Учитель %s занят\n", teacher.GetName());
+                        System.out.printf("Учитель %s занят\n", teacher.getName());
                         return;
                     }
                 }
@@ -124,7 +93,7 @@ public class TrainingCenter {
 
         ArrayList<Student> readyToEnrollStudents = new ArrayList<>();
         for(Student student : students) {
-            if (student.GetChosenSubject().equalsIgnoreCase(courseSubject) && !student.GetStatus()){
+            if (student.getChosenSubject().equalsIgnoreCase(courseSubject) && !student.getStatus()){
                 readyToEnrollStudents.add(student);
             }
         }
@@ -135,50 +104,49 @@ public class TrainingCenter {
 
         if (!readyToEnrollStudents.isEmpty() && courseTeacher != null){
             courses.add(new Course(courseSubject, courseTeacher, readyToEnrollStudents));
-            courseTeacher.MakeBusy();
+            courseTeacher.makeBusy();
             for (Student student : readyToEnrollStudents) {
-                student.GetEnrolled();
+                student.enroll();
             }
         }
     }
 
-    public static void ChangeGrade(String subject, String teacherName, String studentName, int newGrade) {
-        var course  = GetCourse(subject, teacherName);
+    public void changeGrade(String subject, String teacherName, String studentName, int newGrade) {
+        var course  = getCourse(subject, teacherName);
         if(course != null) {
-            course.ChangeGrade(studentName, newGrade);
+            course.changeGrade(studentName, newGrade);
         } else System.out.println("Нет подобного курса\n");
     }
 
-    public static void MarkPresence(String subject, String teacherName, String studentName, boolean presence) {
-        var course  = GetCourse(subject, teacherName);
+    public void markPresence(String subject, String teacherName, String studentName, boolean presence) {
+        var course  = getCourse(subject, teacherName);
         if(course != null) {
-            course.MarkPresence(studentName, presence);
+            course.markPresence(studentName, presence);
         } else System.out.println("Нет подобного курса\n");
     }
 
-    public static void GetCourseInfo(String subject, String teacherName) {
-        var course  = GetCourse(subject, teacherName);
+    public void getCourseInfo(String subject, String teacherName) {
+        var course  = getCourse(subject, teacherName);
         if(course != null) {
-            course.GetCourseInfo();
+            course.getCourseInfo();
         } else System.out.println("Нет подобного курса\n");
     }
 
-    private static boolean CourseExist(String courseSubject) {
+    private boolean courseExist(String courseSubject) {
         for(Teacher teacher : teachers) {
-            if(teacher.GetSubject().equalsIgnoreCase(courseSubject)) return true;
+            if(teacher.getSubject().equalsIgnoreCase(courseSubject)) return true;
             }
             System.out.printf("Нет учителя что мог бы преподавать курс %s\n", courseSubject);
             return false;
     }
 
-    private static Course GetCourse(String subject, String teacherName){
-        Course selectedCourse = null;
+    private Course getCourse(String subject, String teacherName){
         for(Course course : courses){
-            if(course.GetSubject().equalsIgnoreCase(subject) && course.GetLectorName().equalsIgnoreCase(teacherName)) {
-                return selectedCourse = course;
+            if(course.getSubject().equalsIgnoreCase(subject) && course.getLectorName().equalsIgnoreCase(teacherName)) {
+                return course;
             }
         }
-        return selectedCourse;
+        return null;
     }
 }
 

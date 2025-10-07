@@ -5,16 +5,16 @@ abstract class Person {
     private String name;
 
     public Person (String name) {
-        SetName(name);
+        setName(name);
     }
 
-    private void SetName(String name) {
+    private void setName(String name) {
         this.name = name;
     }
 
-    public String GetName() {
+    public String getName() {
         return name;
     }
 
-    public abstract void ShowInfo();
+    public abstract void showInfo();
 }

@@ -2,36 +2,30 @@ package main.java.lessons.lesson5.trainingCenter;
 
 public class Student extends Person{
 
-    private String chosenSubject;
-    private boolean alreadyEnrolled = false;
+    private final String chosenSubject;
+    private boolean isEnrolled;
 
-    public Student(String name, String chosenSubject, boolean alreadyEnrolled) {
+    public Student(String name, String chosenSubject, boolean isEnrolled) {
         super(name);
         this.chosenSubject = chosenSubject;
-        this.alreadyEnrolled = alreadyEnrolled;
+        this.isEnrolled = isEnrolled;
     }
 
     @Override
-    public String GetName() {
-        return super.GetName();
+    public void showInfo() {
+        System.out.printf("Имя: %s, предмет: %s, уже занят: %s\n", getName(), getChosenSubject(), getStatus() ? "да" : "нет");
     }
 
-    @Override
-    public void ShowInfo() {
-        String enrolled;
-        System.out.printf("Имя: %s, предмет: %s, уже занят: %s\n", GetName(), GetChosenSubject(), enrolled = GetStatus() ? "да" : "нет");
-    }
-
-    public String GetChosenSubject() {
+    public String getChosenSubject() {
         return chosenSubject;
     }
 
-    public boolean GetStatus() {
-        return alreadyEnrolled;
+    public boolean getStatus() {
+        return isEnrolled;
     }
 
-    public void GetEnrolled() {
-        if(!alreadyEnrolled) { alreadyEnrolled = true; }
-        else System.out.printf("Студент %s уже записан на другой курс\n", GetName());
+    public void enroll() {
+        if(!isEnrolled) { isEnrolled = true; }
+        else System.out.printf("Студент %s уже записан на другой курс\n", getName());
     }
 }

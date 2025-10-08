@@ -186,8 +186,8 @@ public class MainClass {
             case 4 -> System.out.print("Четвертый урок был посвящен гиту и практических заданий не было)");
             case 5 ->  {
                 System.out.println("\nЗадания:\n" +
-                    "1.Класс Person \n" +
-                    "2.Класс Rectangle\n"
+                    "1.Система для управления курсами в учебном центре \n" +
+                    "2.Система онлайн квиза\n"
                 );
 
                 int task = scanner.nextInt();
@@ -214,7 +214,7 @@ public class MainClass {
                         trainingCenter.getCourseInfo("Math", "Dave");
                     }
                     case 2 -> {
-
+                        System.out.println("Не успел сделать");
                     }
 
                     default -> System.out.print("Нет задания под этим номером");

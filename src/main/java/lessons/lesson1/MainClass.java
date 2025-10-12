@@ -10,12 +10,13 @@ import main.java.lessons.lesson3.Person;
 import main.java.lessons.lesson3.Rectangle;
 import main.java.lessons.lesson3.StreetFighter;
 import main.java.lessons.lesson5.trainingCenter.TrainingCenter;
+import main.java.lessons.lesson6.Airplane;
 
 import java.util.Scanner;
 
 public class MainClass {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         Scanner scanner = new Scanner(System.in);
 
@@ -190,6 +191,7 @@ public class MainClass {
                     "2.Система онлайн квиза\n"
                 );
 
+                System.out.print("Введите номер задания: ");
                 int task = scanner.nextInt();
                 switch (task){
                     case 1 -> {
@@ -217,6 +219,22 @@ public class MainClass {
                         System.out.println("Не успел сделать");
                     }
 
+                    default -> System.out.print("Нет задания под этим номером");
+                }
+            }
+            case 6 -> {
+                System.out.println("\nЗадания:\n" +
+                    "1.Система для управления курсами в учебном центре \n"
+                );
+
+                System.out.print("Введите номер задания: ");
+                int task = scanner.nextInt();
+                switch (task){
+                    case 1 -> {
+                        Airplane airplane = new Airplane();
+                        airplane.setEmptyPlaceSeats();
+                        airplane.setDefaultStateSeats();
+                    }
                     default -> System.out.print("Нет задания под этим номером");
                 }
             }

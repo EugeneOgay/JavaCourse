@@ -235,7 +235,6 @@ public class MainClass {
                         Airplane airplane = new Airplane();
                         airplane.setEmptyPlaceSeats();
                         airplane.setDefaultStateSeats();
-                        airplane.setSeatsFromFile();
                     }
                     default -> System.out.print("Нет задания под этим номером");
                 }

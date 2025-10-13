@@ -233,8 +233,11 @@ public class MainClass {
                 switch (task){
                     case 1 -> {
                         Airplane airplane = new Airplane();
-                        airplane.setEmptyPlaceSeats();
-                        airplane.setDefaultStateSeats();
+                        //airplane.setEmptyPlaceSeats();
+                        //airplane.setDefaultStateSeats();
+                        airplane.setPassengers();
+                        airplane.Reserve("Dylan", "4F", "Business");
+                        airplane.cancelReservation("Dylan", "4F", "Business");
                     }
                     default -> System.out.print("Нет задания под этим номером");
                 }

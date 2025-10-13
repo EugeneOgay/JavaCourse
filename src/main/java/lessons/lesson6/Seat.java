@@ -56,4 +56,14 @@ class Seat {
             exception.getStackTrace();
         }
     }
+
+    public void cancelBooking() {
+        if(isBooked) {
+            isBooked = false;
+        }
+    }
+
+    public void setPassenger(Passenger passenger) {
+        this.passenger = passenger;
+    }
 }

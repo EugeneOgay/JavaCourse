@@ -12,6 +12,7 @@ import main.java.lessons.lesson3.StreetFighter;
 import main.java.lessons.lesson5.trainingCenter.TrainingCenter;
 import main.java.lessons.lesson6.Airplane;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MainClass {
@@ -234,6 +235,7 @@ public class MainClass {
                         Airplane airplane = new Airplane();
                         airplane.setEmptyPlaceSeats();
                         airplane.setDefaultStateSeats();
+                        airplane.setSeatsFromFile();
                     }
                     default -> System.out.print("Нет задания под этим номером");
                 }

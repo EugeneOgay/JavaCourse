@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Airplane {
-    private final ArrayList<Seat> seats = new ArrayList<>();
+    private ArrayList<Seat> seats = new ArrayList<>();
     private final ArrayList<Passenger> passengers = new ArrayList<>();
 
     public void setEmptyPlaceSeats() throws Exception {
@@ -52,32 +52,78 @@ public class Airplane {
         }
     }
 
-    public ArrayList<Seat> loadFromFile() throws Exception{
-        ArrayList<Seat> seats = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("src/main/java/lessons/lesson6/booking.txt"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                String numberAndSection = parts[0];
-                int row = Integer.parseInt(numberAndSection.replaceAll("\\D", ""));
-                String section = String.valueOf(numberAndSection.replaceAll("\\d", "").charAt(0));
-                String seatClass = parts[1];
-                boolean isBooked = parts[2].equals("BOOKED");
-                Passenger passenger = null;
-                if(parts.length > 3) {
-                    for(Passenger pas : passengers) {
-                        if(pas.getName().equalsIgnoreCase(parts[3])){
-                            passenger = pas;
-                            break;
-                        }
+
+//    public ArrayList<Seat> loadFromFile() throws Exception{
+//        ArrayList<Seat> loadedSeats = new ArrayList<>();
+//        try (BufferedReader reader = new BufferedReader(new FileReader("src/main/java/lessons/lesson6/booking.txt"))) {
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                String[] parts = line.split(",");
+//                String numberAndSection = parts[0];
+//                int row = Integer.parseInt(numberAndSection.replaceAll("\\D", ""));
+//                String section = String.valueOf(numberAndSection.replaceAll("\\d", "").charAt(0));
+//                String seatClass = parts[1];
+//                boolean isBooked = parts[2].equals("BOOKED");
+//                Passenger passenger = null;
+//                if(parts.length > 3) {
+//                    for(Passenger pas : passengers) {
+//                        if(pas.getName().equalsIgnoreCase(parts[3])){
+//                            passenger = pas;
+//                            break;
+//                        }
+//                    }
+//                }
+//                //var passenger = parts.length > 3 ? parts[3] : null;
+//
+//                Seat seat = seatClass.equalsIgnoreCase("Business") ?
+//                    new BusinessClassSeat(row, section, isBooked, passenger) :
+//                    new EconomyClassSeat(row, section, isBooked, passenger);
+//                loadedSeats.add(seat);
+////                if(seatClass.equalsIgnoreCase("Business")) {
+////                    Seat seat = new BusinessClassSeat(((int) numberAndSection.charAt(0)), String.valueOf(numberAndSection.charAt(1)), isBooked, passenger);
+////                    seats.add(seat);
+////                }  else {
+////                    Seat seat = new EconomyClassSeat(((int) numberAndSection.charAt(0)), String.valueOf(numberAndSection.charAt(1)), isBooked, passenger);
+////                    seats.add(seat);
+////                }
+//                //Seat seat = new Seat(number, seatClass);
+//                //seat.setBooked(isBooked);
+//                //seat.setPassengerName(passenger);
+//                //seats.add(seat);
+//            }
+//            System.out.println("Данные загружены из файла.");
+//        } catch (IOException e) {
+//            System.out.println("Ошибка при чтении файла: " + e.getMessage());
+//        }
+//        return loadedSeats;
+//    }
+
+private void loadFromFile() throws Exception{
+    ArrayList<Seat> loadedSeats = new ArrayList<>();
+    try (BufferedReader reader = new BufferedReader(new FileReader("src/main/java/lessons/lesson6/booking.txt"))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] parts = line.split(",");
+            String numberAndSection = parts[0];
+            int row = Integer.parseInt(numberAndSection.replaceAll("\\D", ""));
+            String section = String.valueOf(numberAndSection.replaceAll("\\d", "").charAt(0));
+            String seatClass = parts[1];
+            boolean isBooked = parts[2].equals("BOOKED");
+            Passenger passenger = null;
+            if(parts.length > 3) {
+                for(Passenger pas : passengers) {
+                    if(pas.getName().equalsIgnoreCase(parts[3])){
+                        passenger = pas;
+                        break;
                     }
                 }
-                //var passenger = parts.length > 3 ? parts[3] : null;
+            }
+            //var passenger = parts.length > 3 ? parts[3] : null;
 
-                Seat seat = seatClass.equalsIgnoreCase("Business") ?
-                    new BusinessClassSeat(row, section, isBooked, passenger) :
-                    new EconomyClassSeat(row, section, isBooked, passenger);
-                seats.add(seat);
+            Seat seat = seatClass.equalsIgnoreCase("Business") ?
+                new BusinessClassSeat(row, section, isBooked, passenger) :
+                new EconomyClassSeat(row, section, isBooked, passenger);
+            loadedSeats.add(seat);
 //                if(seatClass.equalsIgnoreCase("Business")) {
 //                    Seat seat = new BusinessClassSeat(((int) numberAndSection.charAt(0)), String.valueOf(numberAndSection.charAt(1)), isBooked, passenger);
 //                    seats.add(seat);
@@ -85,15 +131,33 @@ public class Airplane {
 //                    Seat seat = new EconomyClassSeat(((int) numberAndSection.charAt(0)), String.valueOf(numberAndSection.charAt(1)), isBooked, passenger);
 //                    seats.add(seat);
 //                }
-                //Seat seat = new Seat(number, seatClass);
-                //seat.setBooked(isBooked);
-                //seat.setPassengerName(passenger);
-                //seats.add(seat);
-            }
-            System.out.println("Данные загружены из файла.");
-        } catch (IOException e) {
-            System.out.println("Ошибка при чтении файла: " + e.getMessage());
+            //Seat seat = new Seat(number, seatClass);
+            //seat.setBooked(isBooked);
+            //seat.setPassengerName(passenger);
+            //seats.add(seat);
         }
-        return seats;
+        System.out.println("Данные загружены из файла.");
+    } catch (IOException e) {
+        System.out.println("Ошибка при чтении файла: " + e.getMessage());
+    }
+    seats = loadedSeats;
+}
+
+    public void Reserve(String passengerName, String numberAndSection, String seatClass) throws Exception {
+        loadFromFile();
+        int row = Integer.parseInt(numberAndSection.replaceAll("\\D", ""));
+        String section = String.valueOf(numberAndSection.replaceAll("\\d", "").charAt(0));
+        Passenger passenger = null;
+        for(Passenger pas : passengers){
+            if(pas.getName().equalsIgnoreCase(passengerName)) {
+                passenger = pas;
+                break;
+            } else {
+                System.out.println("Нет пассажира с таким именем");
+                return;
+            }
+        }
+        seats.stream().filter(s -> s.getNumber() == row).filter(s -> s.getSection().equalsIgnoreCase(section)).
+            filter(s -> s.getSeatClass().equalsIgnoreCase(seatClass)).findFirst().orElse(null);
     }
 }

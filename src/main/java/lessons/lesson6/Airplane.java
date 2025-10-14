@@ -165,5 +165,13 @@ private void loadFromFile() throws Exception{
         } else System.out.printf("Ряд: %d, секция: %s, класс: %s, статус: занято, пассадир: %s", row, section, seat.getSeatClass(), seat.getPassengerName());
     }
 
-    //вывод инфы  о всех местах
+    public void showAllSeats() throws Exception {
+        loadFromFile();
+        System.out.println("Статус по местам: \n");
+        for(Seat seat : seats){
+            if (!seat.isBooked()) {
+                System.out.printf("Ряд: %d, секция: %s, класс: %s, статус: свободно", seat.getNumber(), seat.getSection(), seat.getSeatClass());
+            } else System.out.printf("Ряд: %d, секция: %s, класс: %s, статус: занято, пассадир: %s", seat.getNumber(), seat.getSection(), seat.getSeatClass(), seat.getPassengerName());
+        }
+    }
 }

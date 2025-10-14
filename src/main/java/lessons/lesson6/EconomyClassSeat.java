@@ -6,6 +6,7 @@ public class EconomyClassSeat extends Seat{
 
     public EconomyClassSeat(int number, String section, boolean booked, Passenger passenger) throws Exception {
         super(number, booked, passenger);
+        if(number < 6 || number > 21) throw new Exception("Выбран ряд иного класса");
         if(!checkSection(section)) throw new Exception("В эконом классе нет такой секции");
         setSection(section);
         setSeatClass("Economy");

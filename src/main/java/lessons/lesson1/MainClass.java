@@ -238,6 +238,8 @@ public class MainClass {
                         airplane.setPassengers();
                         airplane.Reserve("Dylan", "4F", "Business");
                         airplane.cancelReservation("Dylan", "4F", "Business");
+                        airplane.showSeatInfo("5A");
+                        airplane.showAllSeats();
                     }
                     default -> System.out.print("Нет задания под этим номером");
                 }

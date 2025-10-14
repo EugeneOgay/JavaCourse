@@ -1,7 +1,7 @@
 package main.java.lessons.lesson6;
 
 class Seat {
-    private int number;
+    private final int number;
     private String section;
     private String seatClass;
     private boolean isBooked;

@@ -19,7 +19,7 @@ public class Airplane {
         passengers.add(new Passenger("Dylan"));
     }
 
-    private void setEmptyPlaceSeats() throws Exception {
+    private void setEmptyPlaceSeats() {
         //Business class seats
         for(int row = 1; row <= BusinessClassSeat.rows; row++){
             for (String section : BusinessClassSeat.sections) {
@@ -27,6 +27,7 @@ public class Airplane {
                     seats.add(new BusinessClassSeat(row, section, false, null));
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
+                    e.printStackTrace();
                 }
             }
         }
@@ -38,12 +39,13 @@ public class Airplane {
                     seats.add(new EconomyClassSeat(row, section, false, null));
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
+                    e.printStackTrace();
                 }
             }
         }
     }
 
-    public void setDefaultStateSeats() throws Exception {
+    public void setDefaultStateSeats() {
         setEmptyPlaceSeats();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/lessons/lesson6/booking.txt"))) {
             for (Seat seat : seats) {
@@ -53,7 +55,6 @@ public class Airplane {
                 writer.write(line);
                 writer.newLine();
             }
-            System.out.println("Файл успешно создан и заполнен!");
         } catch (IOException e) {
             System.out.println("Ошибка при записи файла: " + e.getMessage());
         }
@@ -69,13 +70,12 @@ public class Airplane {
                 writer.write(line);
                 writer.newLine();
             }
-            System.out.println("Файл успешно создан и заполнен!");
         } catch (IOException e) {
             System.out.println("Ошибка при записи файла: " + e.getMessage());
         }
     }
 
-private void loadFromFile() throws Exception{
+private void loadFromFile() {
     ArrayList<Seat> loadedSeats = new ArrayList<>();
     try (BufferedReader reader = new BufferedReader(new FileReader("src/main/java/lessons/lesson6/booking.txt"))) {
         String line;
@@ -101,14 +101,16 @@ private void loadFromFile() throws Exception{
                 new EconomyClassSeat(row, section, isBooked, passenger);
             loadedSeats.add(seat);
         }
-        System.out.println("Данные загружены из файла.");
     } catch (IOException e) {
         System.out.println("Ошибка при чтении файла: " + e.getMessage());
+    } catch (Exception e) {
+        System.out.println(e.getMessage());
+        e.printStackTrace();
     }
     seats = loadedSeats;
 }
 
-    public void Reserve(String passengerName, String numberAndSection, String seatClass) throws Exception {
+    public void Reserve(String passengerName, String numberAndSection, String seatClass) {
         loadFromFile();
         int row = Integer.parseInt(numberAndSection.replaceAll("\\D", ""));
         String section = String.valueOf(numberAndSection.replaceAll("\\d", "").charAt(0));
@@ -126,52 +128,75 @@ private void loadFromFile() throws Exception{
 
         Seat seat = seats.stream().filter(s -> s.getNumber() == row && s.getSection().equalsIgnoreCase(section)
                 && s.getSeatClass().equalsIgnoreCase(seatClass)).findFirst().orElse(null);
+        if (seat == null) {
+            System.out.printf("Нет места с номером %s, секцией %s и класса %s", row, section, seatClass);
+            return;
+        }
 
-        assert seat != null;
         seat.setPassenger(passenger);
-        seat.setBooked();
+        try {
+            seat.setBooked();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
         rewriteFile();
+        System.out.printf("Место %s заброванировано на имя %s", numberAndSection, passengerName);
     }
 
-    public void cancelReservation(String passengerName, String numberAndSection, String seatClass) throws Exception {
+    public void cancelReservation(String passengerName, String numberAndSection, String seatClass) {
         loadFromFile();
         int row = Integer.parseInt(numberAndSection.replaceAll("\\D", ""));
         String section = String.valueOf(numberAndSection.replaceAll("\\d", "").charAt(0));
 
         Seat seat = seats.stream().filter(s -> s.getNumber() == row && s.getSection().equalsIgnoreCase(section)
-            && s.getSeatClass().equalsIgnoreCase(seatClass)).findFirst().orElse(null);
+            && s.getSeatClass().equalsIgnoreCase(seatClass) && s.getPassengerName().
+            equalsIgnoreCase(passengerName)).findFirst().orElse(null);
+        if (seat == null) {
+            System.out.printf("Нет места с номером %s, секцией %s и класса %s", row, section, seatClass);
+            return;
+        }
 
-        assert seat != null;
         if(!seat.isBooked()) {
             System.out.printf("Место %s класса %s не занято", numberAndSection, seatClass);
+            return;
         }
-        if (!seat.isBooked() || !seat.getPassenger().getName().equalsIgnoreCase(passengerName)) {
+        if (seat.isBooked() && !seat.getPassenger().getName().equalsIgnoreCase(passengerName)) {
             System.out.println("Место забронировано другим пассажиром и вы не можете снять бронь");
         } else if (seat.isBooked() && seat.getPassengerName().equalsIgnoreCase(passengerName)) {
             seat.cancelBooking();
             seat.setPassenger(null);
             rewriteFile();
+            System.out.printf("Бронь места %s на имя %s снята", numberAndSection, passengerName);
         }
     }
 
-    public void showSeatInfo(String numberAndSection) throws Exception {
+    public void showSeatInfo(String numberAndSection) {
         loadFromFile();
         int row = Integer.parseInt(numberAndSection.replaceAll("\\D", ""));
         String section = String.valueOf(numberAndSection.replaceAll("\\d", "").charAt(0));
         Seat seat = seats.stream().filter(s -> s.getNumber() == row && s.getSection().equalsIgnoreCase(section))
             .findFirst().orElse(null);
+        if (seat == null) {
+            System.out.printf("Нет места с номером %s и секцией %s", row, section);
+            return;
+        }
         if (!seat.isBooked()) {
-            System.out.printf("Ряд: %d, секция: %s, класс: %s, статус: свободно", row, section, seat.getSeatClass());
-        } else System.out.printf("Ряд: %d, секция: %s, класс: %s, статус: занято, пассадир: %s", row, section, seat.getSeatClass(), seat.getPassengerName());
+            System.out.printf("Ряд: %d, секция: %s, класс: %s, статус: свободно\n",
+                row, section, seat.getSeatClass());
+        } else System.out.printf("Ряд: %d, секция: %s, класс: %s, статус: занято, пассажир: %s\n",
+            row, section, seat.getSeatClass(), seat.getPassengerName());
     }
 
-    public void showAllSeats() throws Exception {
+    public void showAllSeats() {
         loadFromFile();
         System.out.println("Статус по местам: \n");
         for(Seat seat : seats){
             if (!seat.isBooked()) {
-                System.out.printf("Ряд: %d, секция: %s, класс: %s, статус: свободно", seat.getNumber(), seat.getSection(), seat.getSeatClass());
-            } else System.out.printf("Ряд: %d, секция: %s, класс: %s, статус: занято, пассадир: %s", seat.getNumber(), seat.getSection(), seat.getSeatClass(), seat.getPassengerName());
+                System.out.printf("Ряд: %d, секция: %s, класс: %s, статус: свободно\n",
+                    seat.getNumber(), seat.getSection(), seat.getSeatClass());
+            } else System.out.printf("Ряд: %d, секция: %s, класс: %s, статус: занято, пассажир: %s\n",
+                seat.getNumber(), seat.getSection(), seat.getSeatClass(), seat.getPassengerName());
         }
     }
 }

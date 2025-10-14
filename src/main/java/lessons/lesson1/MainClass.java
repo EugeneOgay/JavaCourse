@@ -12,7 +12,6 @@ import main.java.lessons.lesson3.StreetFighter;
 import main.java.lessons.lesson5.trainingCenter.TrainingCenter;
 import main.java.lessons.lesson6.Airplane;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MainClass {
@@ -224,25 +223,17 @@ public class MainClass {
                 }
             }
             case 6 -> {
-                System.out.println("\nЗадания:\n" +
-                    "1.Система для управления курсами в учебном центре \n"
+                System.out.println("\nЗадание:\n" +
+                    "Консольное приложение для бронирования авиабилетов \n"
                 );
-
-                System.out.print("Введите номер задания: ");
-                int task = scanner.nextInt();
-                switch (task){
-                    case 1 -> {
-                        Airplane airplane = new Airplane();
-                        //airplane.setEmptyPlaceSeats();
-                        //airplane.setDefaultStateSeats();
-                        airplane.setPassengers();
-                        airplane.Reserve("Dylan", "4F", "Business");
-                        airplane.cancelReservation("Dylan", "4F", "Business");
-                        airplane.showSeatInfo("5A");
-                        airplane.showAllSeats();
-                    }
-                    default -> System.out.print("Нет задания под этим номером");
-                }
+                Airplane airplane = new Airplane();
+                //airplane.setEmptyPlaceSeats();
+                //airplane.setDefaultStateSeats();
+                airplane.setPassengers();
+                airplane.Reserve("Dylan", "4F", "Business");
+                airplane.cancelReservation("Dylan", "4F", "Business");
+                airplane.showSeatInfo("5A");
+                airplane.showAllSeats();
             }
             default -> System.out.print("Нет урока под этим номером");
         }

@@ -1,6 +1,14 @@
 package main.java.lessons.lesson1;
 
 import main.java.lessons.lesson2.Lesson2;
+import main.java.lessons.lesson3.BankAccount;
+import main.java.lessons.lesson3.BankSystem;
+import main.java.lessons.lesson3.Book;
+import main.java.lessons.lesson3.Car;
+import main.java.lessons.lesson3.OnlineStore;
+import main.java.lessons.lesson3.Person;
+import main.java.lessons.lesson3.Rectangle;
+import main.java.lessons.lesson3.StreetFighter;
 
 import java.util.Scanner;
 
@@ -38,7 +46,7 @@ public class MainClass {
                     "19.Поиск элемента\n" +
                     "20.Мини-игра \"Угадай число\"\n");
 
-                System.out.print("Введите номер урока: ");
+                System.out.print("Введите номер задания: ");
                 int task = scanner.nextInt();
                 switch (task){
                     case 1 -> Lesson2.Quest();
@@ -61,6 +69,119 @@ public class MainClass {
                     case 18 -> Lesson2.ArithmeticMean();
                     case 19 -> Lesson2.ElementSearch();
                     case 20 -> Lesson2.GuessTheNumber();
+                    default -> System.out.print("Нет задания под этим номером");
+                }
+            }
+            case 3 -> {
+                System.out.println("\nЗадания:\n" +
+                        "1.Класс Person \n" +
+                        "2.Класс Rectangle\n" +
+                        "3.Класс Car\n" +
+                        "4.Класс BankAccount\n" +
+                        "5.Класс Book\n" +
+                        "6.Класс OnlineStore\n" +
+                        "7.Класс BankSystem\n" +
+                        "8.Компьютерная игра (StreetFighter)\n"
+                    );
+
+                System.out.print("Введите номер задания: ");
+                int task = scanner.nextInt();
+                switch (task){
+                    case 1 -> {
+                        System.out.print("Введите имя: ");
+                        Scanner stringScanner = new Scanner(System.in);
+                        String name = stringScanner.nextLine();
+                        System.out.print("Введите возраст: ");
+                        int age = scanner.nextInt();
+                        Person person = new Person(name, age);
+                        person.introducePerson();
+//                        Person person2 = new Person();
+//                        person2.Introduce2();
+                    }
+                    case 2 -> {
+                        System.out.print("Введите длину прямоугольника: ");
+                        int length = scanner.nextInt();
+                        System.out.print("Введите ширину прямоугольника: ");
+                        int width = scanner.nextInt();
+                        Rectangle rectangle = new Rectangle(length, width);
+                        System.out.printf("Площадь прямоугольника равна %d\n", rectangle.сalculateSquare());
+                        System.out.printf("Периметр прямоугольника равен %d", rectangle.сalculatePerimeter());
+                    }
+                    case 3 -> {
+                        System.out.print("Введите данные о машине!\n");
+                        Scanner stringScanner = new Scanner(System.in);
+                        System.out.print("Страна: ");
+                        String county = stringScanner.nextLine();
+                        System.out.print("Модель: ");
+                        String model = stringScanner.nextLine();
+                        System.out.print("Год: ");
+                        int yearOfManufacture = scanner.nextInt();
+                        Car car = new Car(county, model, yearOfManufacture);
+                        car.printCarInfo();
+                    }
+                    case 4 -> {
+                        System.out.print("Введите данные об аккаунте!\n");
+                        Scanner stringScanner = new Scanner(System.in);
+                        System.out.print("ФИО: ");
+                        String fio = stringScanner.nextLine();
+                        System.out.print("Номер аккаунта: ");
+                        long accountNumber = scanner.nextLong();
+                        System.out.print("Баланс: ");
+                        int balance = scanner.nextInt();
+                        BankAccount bankAccount = new BankAccount(fio, accountNumber, balance);
+                        bankAccount.getBalance();
+                        bankAccount.deposit(5000);
+                        bankAccount.getBalance();
+                        bankAccount.withdraw(10000);
+                        bankAccount.getBalance();
+                    }
+                    case 5 -> {
+                        Book book1 = new Book("100 лет одиночества", "Маркес", 1965, true);
+                        Book book2 = new Book("451 градус по фаренгейту", "Бредберри", 1953, true);
+                        Book.addNewBook(book1);
+                        Book.addNewBook(book2);
+                        book1.reserveBook();
+                        Book.getBooks();
+                        book2.getBookInfo();
+                    }
+                    case 6 -> {
+                        OnlineStore onlineStore =  new OnlineStore();
+                        onlineStore.addProduct(onlineStore.new Product("123", "яблоко", 100, 2));
+                        onlineStore.addProduct(onlineStore.new Product("456", "груша", 200, 3));
+                        onlineStore.addProduct(onlineStore.new Product("123", "яблоко", 100, 4));
+                        onlineStore.getProducts();
+                        onlineStore.getProductInfo("яблоко");
+                        onlineStore.buyProduct("яблоко", 10);
+                        onlineStore.buyProduct("яблоко", 6);
+                        onlineStore.buyProduct("хурма", 6);
+                        onlineStore.getProducts();
+                        onlineStore.getProductInfo("хурма");
+                    }
+                    case 7 -> {
+                        BankSystem bankSystem  = new BankSystem();
+                        bankSystem.addAccount(bankSystem.new Account(1,  "ololo", 10));
+                        bankSystem.addAccount(bankSystem.new Account(2,  "tomas", 20));
+                        bankSystem.addAccount(bankSystem.new Account(3,  "chris", 30));
+                        bankSystem.deleteAccount(bankSystem.new Account(4,  "chris", 30));
+                        bankSystem.deleteAccount(bankSystem.new Account(3,  "chris", 30));
+                        bankSystem.replenishAccount(1, 40);
+                        bankSystem.getAccountInfo(3);
+                        bankSystem.getAccountInfo(1);
+                        bankSystem.transferMoneyBetweenAccounts(1, 2, 60);
+                        bankSystem.transferMoneyBetweenAccounts(1, 2, 30);
+                        bankSystem.getAccountInfo(1);
+                        bankSystem.getAccountInfo(2);
+                    }
+                    case 8 -> {
+                        StreetFighter streetFighter = new StreetFighter();
+                        streetFighter.addAFighter(streetFighter.new Fighter(1, "Shiva", 100, 10));
+                        streetFighter.addAFighter(streetFighter.new Fighter(2, "Axel", 100, 15));
+                        streetFighter.addAFighter(streetFighter.new Fighter(3, "Blaze", 120, 8));
+                        streetFighter.getFighters();
+                        streetFighter.fight("Shiva", "Axel");
+                        streetFighter.getFighterInfo("Axel");
+                        streetFighter.getFighterInfo("Shiva");
+                    }
                     default -> System.out.print("Нет задания под этим номером");
                 }
             }

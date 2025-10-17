@@ -4,47 +4,48 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class StreetFighter {
-    public static ArrayList<Fighter> fighters = new ArrayList<>();
-    public static void AddAFighter(Fighter fighter) {
+    private ArrayList<Fighter> fighters = new ArrayList<>();
+
+    public void addAFighter(Fighter fighter) {
         fighters.add(fighter);
     }
-    public static void GetFighters() {
+
+    public void getFighters() {
         if (!fighters.isEmpty()) {
             for (Fighter fighter : fighters) {
-                fighter.GetFighterInfo();
+                fighter.getFighterInfo();
             }
         } else System.out.println("Нет бойцов\n");
     }
 
-    public static void GetFighterInfo(String name) {
+    public void getFighterInfo(String name) {
         var foundFighter = fighters.stream().filter(f -> f.name.equalsIgnoreCase(name)).findFirst().orElse(null);
-        foundFighter.GetFighterInfo();
+        foundFighter.getFighterInfo();
     }
 
-    public static void Fight(String firstFighterName, String secondFighterName) {
+    public void fight(String firstFighterName, String secondFighterName) {
         var firstFighter = fighters.stream().filter(f -> f.name.equalsIgnoreCase(firstFighterName)).findFirst().orElse(null);
         var secondFighter = fighters.stream().filter(f -> f.name.equalsIgnoreCase(secondFighterName)).findFirst().orElse(null);
         Random r = new Random();
         String firstToAttack = r.nextInt(2) == 0 ? firstFighterName : secondFighterName;
-        if(firstToAttack  ==  firstFighterName) {
-            do {
-                secondFighter.health = secondFighter.health - firstFighter.attack;
-                firstFighter.health = firstFighter.health - secondFighter.attack;
-            } while (firstFighter.health > 0 && secondFighter.health > 0);
+        if(firstToAttack.equalsIgnoreCase(firstFighterName)) {
+            fightAction(firstFighter, secondFighter);
+        } else fightAction(secondFighter, firstFighter);
+    }
+
+    private void fightAction(Fighter firstAttacker, Fighter secondAttacker){
+        do {
+            secondAttacker.health = secondAttacker.health - firstAttacker.attack;
+            firstAttacker.health = firstAttacker.health - secondAttacker.attack;
+        } while (firstAttacker.health > 0 && secondAttacker.health > 0);
+        if(firstAttacker.health > secondAttacker.health) {
+            System.out.printf("Победил боец %s\n", firstAttacker.name);
         } else {
-            do {
-                firstFighter.health = firstFighter.health - secondFighter.attack;
-                secondFighter.health = secondFighter.health - firstFighter.attack;
-            } while (firstFighter.health > 0 && secondFighter.health > 0);
-        }
-        if(firstFighter.health > secondFighter.health) {
-            System.out.printf("Победил боец %s\n", firstFighter.name);
-        } else {
-            System.out.printf("Победил боец %s\n", secondFighter.name);
+            System.out.printf("Победил боец %s\n", secondAttacker.name);
         }
     }
 
-    public static class Fighter {
+    public class Fighter {
         private int code;
         private String name;
         private int health;
@@ -57,7 +58,7 @@ public class StreetFighter {
             this.attack = attack;
         }
 
-        public void GetFighterInfo() {
+        public void getFighterInfo() {
             System.out.printf("Код: %d, Имя: %s, Здоровье: %d, Аттака: %d\n", code, name,  health, attack);
         }
     }

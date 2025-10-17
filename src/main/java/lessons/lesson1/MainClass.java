@@ -12,8 +12,6 @@ import main.java.lessons.lesson3.StreetFighter;
 
 import java.util.Scanner;
 
-import static main.java.lessons.lesson3.Book.books;
-
 public class MainClass {
 
     public static void main(String[] args) {
@@ -96,7 +94,7 @@ public class MainClass {
                         System.out.print("Введите возраст: ");
                         int age = scanner.nextInt();
                         Person person = new Person(name, age);
-                        person.Introduce();
+                        person.introducePerson();
 //                        Person person2 = new Person();
 //                        person2.Introduce2();
                     }
@@ -106,8 +104,8 @@ public class MainClass {
                         System.out.print("Введите ширину прямоугольника: ");
                         int width = scanner.nextInt();
                         Rectangle rectangle = new Rectangle(length, width);
-                        System.out.printf("Площадь прямоугольника равна %d\n", rectangle.CalculateSquare());
-                        System.out.printf("Периметр прямоугольника равен %d", rectangle.CalculatePerimeter());
+                        System.out.printf("Площадь прямоугольника равна %d\n", rectangle.сalculateSquare());
+                        System.out.printf("Периметр прямоугольника равен %d", rectangle.сalculatePerimeter());
                     }
                     case 3 -> {
                         System.out.print("Введите данные о машине!\n");
@@ -119,7 +117,7 @@ public class MainClass {
                         System.out.print("Год: ");
                         int yearOfManufacture = scanner.nextInt();
                         Car car = new Car(county, model, yearOfManufacture);
-                        Car.PrintCarInfo(car);
+                        car.printCarInfo();
                     }
                     case 4 -> {
                         System.out.print("Введите данные об аккаунте!\n");
@@ -131,55 +129,58 @@ public class MainClass {
                         System.out.print("Баланс: ");
                         int balance = scanner.nextInt();
                         BankAccount bankAccount = new BankAccount(fio, accountNumber, balance);
-                        bankAccount.GetBalance();
-                        bankAccount.Deposit(5000);
-                        bankAccount.GetBalance();
-                        bankAccount.Withdraw(10000);
-                        bankAccount.GetBalance();
+                        bankAccount.getBalance();
+                        bankAccount.deposit(5000);
+                        bankAccount.getBalance();
+                        bankAccount.withdraw(10000);
+                        bankAccount.getBalance();
                     }
                     case 5 -> {
                         Book book1 = new Book("100 лет одиночества", "Маркес", 1965, true);
                         Book book2 = new Book("451 градус по фаренгейту", "Бредберри", 1953, true);
-                        Book.AddNewBook(book1);
-                        Book.AddNewBook(book2);
-                        book1.ReserveBook();
-                        Book.GetBooks();
-                        book2.GetBookInfo();
+                        Book.addNewBook(book1);
+                        Book.addNewBook(book2);
+                        book1.reserveBook();
+                        Book.getBooks();
+                        book2.getBookInfo();
                     }
                     case 6 -> {
-                        OnlineStore.AddProduct(new OnlineStore.Product("123", "яблоко", 100, 2));
-                        OnlineStore.AddProduct(new OnlineStore.Product("456", "груша", 200, 3));
-                        OnlineStore.AddProduct(new OnlineStore.Product("123", "яблоко", 100, 4));
-                        OnlineStore.GetProducts();
-                        OnlineStore.GetProductInfo("яблоко");
-                        OnlineStore.BuyProduct("яблоко", 10);
-                        OnlineStore.BuyProduct("яблоко", 6);
-                        OnlineStore.BuyProduct("хурма", 6);
-                        OnlineStore.GetProducts();
-                        OnlineStore.GetProductInfo("хурма");
+                        OnlineStore onlineStore =  new OnlineStore();
+                        onlineStore.addProduct(onlineStore.new Product("123", "яблоко", 100, 2));
+                        onlineStore.addProduct(onlineStore.new Product("456", "груша", 200, 3));
+                        onlineStore.addProduct(onlineStore.new Product("123", "яблоко", 100, 4));
+                        onlineStore.getProducts();
+                        onlineStore.getProductInfo("яблоко");
+                        onlineStore.buyProduct("яблоко", 10);
+                        onlineStore.buyProduct("яблоко", 6);
+                        onlineStore.buyProduct("хурма", 6);
+                        onlineStore.getProducts();
+                        onlineStore.getProductInfo("хурма");
                     }
                     case 7 -> {
-                        BankSystem.AddAccount(new BankSystem.Account(1,  "ololo", 10));
-                        BankSystem.AddAccount(new BankSystem.Account(2,  "tomas", 20));
-                        BankSystem.AddAccount(new BankSystem.Account(3,  "chris", 30));
-                        BankSystem.DeleteAccount(new BankSystem.Account(4,  "chris", 30));
-                        BankSystem.DeleteAccount(new BankSystem.Account(3,  "chris", 30));
-                        BankSystem.ReplenishAccount(1, 40);
-                        BankSystem.GetAccountInfo(3);
-                        BankSystem.GetAccountInfo(1);
-                        BankSystem.TransferMoneyBetweenAccounts(1, 2, 60);
-                        BankSystem.TransferMoneyBetweenAccounts(1, 2, 30);
-                        BankSystem.GetAccountInfo(1);
-                        BankSystem.GetAccountInfo(2);
+                        BankSystem bankSystem  = new BankSystem();
+                        bankSystem.addAccount(bankSystem.new Account(1,  "ololo", 10));
+                        bankSystem.addAccount(bankSystem.new Account(2,  "tomas", 20));
+                        bankSystem.addAccount(bankSystem.new Account(3,  "chris", 30));
+                        bankSystem.deleteAccount(bankSystem.new Account(4,  "chris", 30));
+                        bankSystem.deleteAccount(bankSystem.new Account(3,  "chris", 30));
+                        bankSystem.replenishAccount(1, 40);
+                        bankSystem.getAccountInfo(3);
+                        bankSystem.getAccountInfo(1);
+                        bankSystem.transferMoneyBetweenAccounts(1, 2, 60);
+                        bankSystem.transferMoneyBetweenAccounts(1, 2, 30);
+                        bankSystem.getAccountInfo(1);
+                        bankSystem.getAccountInfo(2);
                     }
                     case 8 -> {
-                        StreetFighter.AddAFighter(new StreetFighter.Fighter(1, "Shiva", 100, 10));
-                        StreetFighter.AddAFighter(new StreetFighter.Fighter(2, "Axel", 100, 15));
-                        StreetFighter.AddAFighter(new StreetFighter.Fighter(3, "Blaze", 120, 8));
-                        StreetFighter.GetFighters();
-                        StreetFighter.Fight("Shiva", "Axel");
-                        StreetFighter.GetFighterInfo("Axel");
-                        StreetFighter.GetFighterInfo("Shiva");
+                        StreetFighter streetFighter = new StreetFighter();
+                        streetFighter.addAFighter(streetFighter.new Fighter(1, "Shiva", 100, 10));
+                        streetFighter.addAFighter(streetFighter.new Fighter(2, "Axel", 100, 15));
+                        streetFighter.addAFighter(streetFighter.new Fighter(3, "Blaze", 120, 8));
+                        streetFighter.getFighters();
+                        streetFighter.fight("Shiva", "Axel");
+                        streetFighter.getFighterInfo("Axel");
+                        streetFighter.getFighterInfo("Shiva");
                     }
                     default -> System.out.print("Нет задания под этим номером");
                 }

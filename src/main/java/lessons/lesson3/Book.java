@@ -3,12 +3,12 @@ package main.java.lessons.lesson3;
 import java.util.ArrayList;
 
 public class Book {
-    String name;
-    String author;
-    int year;
-    boolean status;
+    private String name;
+    private String author;
+    private int year;
+    private boolean status; // true - Свободна, false - Зарезервирована
 
-    public static ArrayList<Book> books = new ArrayList<>();
+    private static ArrayList<Book> books = new ArrayList<>();
 
     public Book(String name, String author, int year, boolean status) {
         this.name = name;
@@ -17,28 +17,27 @@ public class Book {
         this.status = status;
     }
 
-    public static void AddNewBook(Book book) {
+    public static void addNewBook(Book book) {
         books.add(book);
     }
 
-    public void GetBookInfo() {
-        String reserved;
+    public void getBookInfo() {
         System.out.printf("Информация о книге: \nНазвание: %s\n, Автор: %s\n, Год: %d\n, Cтатус: %s\n",
-            name, author, year, reserved = status ? "Свободна\n" : "Зарезервирована\n");
+            name, author, year, status ? "Свободна\n" : "Зарезервирована\n");
     }
 
-    public static void GetBooks() {
+    public static void getBooks() {
         if (books.isEmpty()) {
             System.out.println("Библиотека пуста");
         } else {
             System.out.println("Библиотека:\n");
             for (Book book : books) {
-                book.GetBookInfo();
+                book.getBookInfo();
             }
         }
     }
 
-    public void ReserveBook() {
+    public void reserveBook() {
         if (status) {
             status = false;
             System.out.println("Книга " + name + " зарезервирована\n");

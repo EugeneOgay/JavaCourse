@@ -3,13 +3,9 @@ package main.java.lessons.lesson3;
 import java.util.ArrayList;
 
 public class OnlineStore {
-    public static ArrayList<Product> products = new ArrayList<>();
+    private ArrayList<Product> products = new ArrayList<>();
 
-    public static void AddProduct(Product newProduct) {
-        if (products.isEmpty()) {
-            products.add(newProduct);
-            return;
-        }
+    public void addProduct(Product newProduct) {
         for (Product product : products) {
             if(product.code.equalsIgnoreCase(newProduct.code) && product.name.equalsIgnoreCase(newProduct.name)
                 && product.price == newProduct.price) {
@@ -20,9 +16,9 @@ public class OnlineStore {
         products.add(newProduct);
     }
 
-    public static void BuyProduct(String name, int amount) {
-        for (Product product : products) {
-            if(product.name.equalsIgnoreCase(name)) {
+    public void buyProduct(String name, int amount) {
+        Product product = searchProduct(name);
+            if(product != null) {
                 if(product.count > 0 && product.count >= amount) {
                     product.count = product.count - amount;
                     if (product.count == 0) {
@@ -34,21 +30,19 @@ public class OnlineStore {
                     return;
                 }
             }
-        }
         System.out.printf("Товар %s не найден.\n", name);
     }
 
-    public static void GetProductInfo(String name) {
-        for (Product product : products) {
-            if(product.name.equalsIgnoreCase(name)) {
+    public void getProductInfo(String name) {
+        Product product = searchProduct(name);
+            if(product != null) {
                 product.GetProductInfo();
                 return;
             }
-        }
         System.out.printf("Товар %s не найден.\n", name);
     }
 
-    public static void GetProducts() {
+    public void getProducts() {
         if (!products.isEmpty()) {
             for (Product product : products) {
                 product.GetProductInfo();
@@ -56,7 +50,11 @@ public class OnlineStore {
         } else System.out.println("Магазин пуст\n");
     }
 
-    public static class Product {
+    private Product searchProduct(String productName){
+        return products.stream().filter(p -> p.name.equalsIgnoreCase(productName)).findFirst().orElse(null);
+    }
+
+    public class Product {
         private String code;
         private String name;
         private int price;

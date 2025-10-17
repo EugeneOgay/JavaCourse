@@ -3,15 +3,11 @@ package main.java.lessons.lesson3;
 import java.util.ArrayList;
 
 public class BankSystem {
-    public static ArrayList<Account> accounts = new ArrayList<>();
+    private ArrayList<Account> accounts = new ArrayList<>();
 
-    public static void AddAccount(Account newAccount) {
-        if(accounts.isEmpty()) {
-            accounts.add(newAccount);
-            return;
-        }
+    public void addAccount(Account newAccount) {
         for (Account account : accounts) {
-            if(account.accountNumber ==  newAccount.accountNumber && account.fio.equalsIgnoreCase(newAccount.fio)) {
+            if(account.accountNumber == newAccount.accountNumber && account.fio.equalsIgnoreCase(newAccount.fio)) {
                 System.out.printf("Уже есть аккаунт со счетом %d и пользователем %s", account.accountNumber, account. fio);
                 return;
             }
@@ -19,12 +15,11 @@ public class BankSystem {
         accounts.add(newAccount);
     }
 
-    public static void DeleteAccount(Account accountToDelete) {
-        if(accounts.isEmpty()) {
-            System.out.println("Отсутсвуют записи об аккаунтах");
+    public void deleteAccount(Account accountToDelete) {
+        if(isAccountsEmpty()) {
             return;
         }
-        var foundAcc = accounts.stream().filter(acc  -> acc.accountNumber == accountToDelete.accountNumber).findFirst().orElse(null);
+        var foundAcc = searchAccount(accountToDelete.accountNumber);
         if(foundAcc != null){
             accounts.remove(foundAcc);
             return;
@@ -32,33 +27,31 @@ public class BankSystem {
         System.out.println("Нет подобного аккаунта");
     }
 
-    public static void ReplenishAccount(int accNumber, int amount) {
-        if(accounts.isEmpty()) {
-            System.out.println("Отсутсвуют записи об аккаунтах");
+    public void replenishAccount(int accNumber, int amount) {
+        if(isAccountsEmpty()) {
             return;
         }
-        var foundAcc = accounts.stream().filter(acc  -> acc.accountNumber == accNumber).findFirst().orElse(null);
+        var foundAcc = searchAccount(accNumber);
         if(foundAcc != null){
-            foundAcc.Replenish(amount);
+            foundAcc.replenish(amount);
             return;
         }
         System.out.println("Нет подобного аккаунта");
     }
 
-    public static void GetAccountInfo(int accNumber) {
-        if(accounts.isEmpty()) {
-            System.out.println("Отсутсвуют записи об аккаунтах");
+    public void getAccountInfo(int accNumber) {
+        if(isAccountsEmpty()) {
             return;
         }
-        var foundAcc = accounts.stream().filter(acc  -> acc.accountNumber == accNumber).findFirst().orElse(null);
+        var foundAcc = searchAccount(accNumber);
         if(foundAcc != null){
-            foundAcc.GetAccountInfo();
+            foundAcc.getAccountInfo();
         } else System.out.println("Нет подобного аккаунта");
     }
 
-    public static void TransferMoneyBetweenAccounts(int senderAcc, int receiverAcc, int amount) {
-        var sender = accounts.stream().filter(acc  -> acc.accountNumber == senderAcc).findFirst().orElse(null);
-        var receiver = accounts.stream().filter(acc  -> acc.accountNumber == receiverAcc).findFirst().orElse(null);
+    public void transferMoneyBetweenAccounts(int senderAcc, int receiverAcc, int amount) {
+        var sender = searchAccount(senderAcc);
+        var receiver = searchAccount(receiverAcc);
         if(sender == null || receiver == null) {
             System.out.println("Неверные данные  аккаунтов");
             return;
@@ -71,7 +64,18 @@ public class BankSystem {
         receiver.balance =  receiver.balance + amount;
     }
 
-    public static class Account {
+    private Account searchAccount(int accNumber) {
+        return accounts.stream().filter(acc -> acc.accountNumber ==  accNumber).findFirst().orElse(null);
+    }
+
+    private boolean isAccountsEmpty() {
+        if(accounts.isEmpty()) {
+            System.out.println("Отсутсвуют записи об аккаунтах");
+            return true;
+        } else return false;
+    }
+
+    public class Account {
         private int accountNumber;
         private String fio;
         private int balance;
@@ -82,11 +86,11 @@ public class BankSystem {
             this.balance = balance;
         }
 
-        public void GetAccountInfo() {
+        public void getAccountInfo() {
             System.out.printf("Номер: %d, ФИО: %s, Баланс: %d\n", accountNumber, fio, balance);
         }
 
-        public void Replenish(int amount) {
+        public void replenish(int amount) {
             balance = balance + amount;
         }
     }

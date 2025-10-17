@@ -1,9 +1,9 @@
 package main.java.lessons.lesson3;
 
 public class Car {
-    String county;
-    String model;
-    int yearOfManufacture;
+    private String county;
+    private String model;
+    private int yearOfManufacture;
 
     public Car(String county, String model, int yearOfManufacture){
         this.county = county;
@@ -11,10 +11,10 @@ public class Car {
         this.yearOfManufacture = yearOfManufacture;
     }
 
-    public static void PrintCarInfo(Car car) {
+    public void printCarInfo() {
         System.out.println("\nИнформация о машине:");
-        System.out.printf("Страна: %s\n", car.county);
-        System.out.printf("Модель: %s\n", car.model);
-        System.out.printf("Год: %d", car.yearOfManufacture);
+        System.out.printf("Страна: %s\n", county);
+        System.out.printf("Модель: %s\n", model);
+        System.out.printf("Год: %d", yearOfManufacture);
     }
 }

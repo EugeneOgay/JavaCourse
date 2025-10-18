@@ -9,6 +9,7 @@ import main.java.lessons.lesson3.OnlineStore;
 import main.java.lessons.lesson3.Person;
 import main.java.lessons.lesson3.Rectangle;
 import main.java.lessons.lesson3.StreetFighter;
+import main.java.lessons.lesson5.trainingCenter.TrainingCenter;
 
 import java.util.Scanner;
 
@@ -182,6 +183,43 @@ public class MainClass {
                         streetFighter.getFighterInfo("Axel");
                         streetFighter.getFighterInfo("Shiva");
                     }
+                    default -> System.out.print("Нет задания под этим номером");
+                }
+            }
+            case 4 -> System.out.print("Четвертый урок был посвящен гиту и практических заданий не было)");
+            case 5 ->  {
+                System.out.println("\nЗадания:\n" +
+                    "1.Система для управления курсами в учебном центре \n" +
+                    "2.Система онлайн квиза\n"
+                );
+
+                int task = scanner.nextInt();
+                switch (task){
+                    case 1 -> {
+                        TrainingCenter trainingCenter = new TrainingCenter();
+                        trainingCenter.setTeachers();
+                        trainingCenter.setStudents();
+                        trainingCenter.getTeachers();
+                        trainingCenter.getStudents();
+                        trainingCenter.createCourse("Geometry", "ololo");
+                        trainingCenter.createCourse("Math", "John");
+                        trainingCenter.createCourse("Math", "Tom");
+                        trainingCenter.createCourse("Math", "Dave");
+                        trainingCenter.getCourses();
+                        trainingCenter.getTeachers();
+                        trainingCenter.getStudents();
+                        trainingCenter.getCourseInfo("Geometry", "ololo");
+                        trainingCenter.getCourseInfo("Math", "Dave");
+                        trainingCenter.changeGrade("Math", "Dave", "Robert", 50);
+                        trainingCenter.changeGrade("Math", "Dave", "Andrew", 50);
+                        trainingCenter.markPresence("Math", "Dave", "Robert", true);
+                        trainingCenter.markPresence("Math", "Dave", "Andrew", true);
+                        trainingCenter.getCourseInfo("Math", "Dave");
+                    }
+                    case 2 -> {
+                        System.out.println("Не успел сделать");
+                    }
+
                     default -> System.out.print("Нет задания под этим номером");
                 }
             }

@@ -5,10 +5,6 @@ abstract class Person {
     private String name;
 
     public Person (String name) {
-        setName(name);
-    }
-
-    private void setName(String name) {
         this.name = name;
     }
 

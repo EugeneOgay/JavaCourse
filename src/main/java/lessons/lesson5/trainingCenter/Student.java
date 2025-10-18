@@ -2,7 +2,7 @@ package main.java.lessons.lesson5.trainingCenter;
 
 public class Student extends Person{
 
-    private final String chosenSubject;
+    private String chosenSubject;
     private boolean isEnrolled;
 
     public Student(String name, String chosenSubject, boolean isEnrolled) {

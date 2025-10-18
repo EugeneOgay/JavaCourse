@@ -2,13 +2,13 @@ package main.java.lessons.lesson5.trainingCenter;
 
 public class Teacher extends Person {
 
-    private final String subject;
-    private boolean available = true;
+    private String subject;
+    private boolean isAvailable;
 
     public Teacher(String name, String subject, boolean available) {
         super(name);
         this.subject = subject;
-        this.available = available;
+        this.isAvailable = available;
     }
 
     @Override
@@ -21,11 +21,11 @@ public class Teacher extends Person {
     }
 
     public void makeBusy() {
-        if(available){ available = false; }
+        if(isAvailable){ isAvailable = false; }
         else System.out.printf("Преподаватель %s уже занят\n", getName());
     }
 
     public boolean getStatus() {
-        return available;
+        return isAvailable;
     }
 }

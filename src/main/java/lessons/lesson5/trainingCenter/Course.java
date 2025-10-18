@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Course {
-    private final String subject;
-    private final Teacher lector;
-    private final ArrayList<Student> students;
+    private String subject;
+    private Teacher lector;
+    private ArrayList<Student> students;
     private Map<String, Integer> grades = new HashMap<>();
     private Map<String, Boolean> presence = new HashMap<>();
 
@@ -37,14 +37,18 @@ public class Course {
     public void printGrades() {
         System.out.println("Журнал успеваемости: \n");
         for(Map.Entry<String, Integer> currentGrades : grades.entrySet()){
-            System.out.printf("Студент: %s, оценка: %d\n", currentGrades.getKey(), currentGrades.getValue());
+            String studentName = currentGrades.getKey();
+            int studentGrade = currentGrades.getValue();
+            System.out.printf("Студент: %s, оценка: %d\n", studentName, studentGrade);
         }
     }
 
     public void printPresence() {
         System.out.println("Журнал плсещаемости: \n");
         for(Map.Entry<String, Boolean> currentPresence : presence.entrySet()){
-            System.out.printf("Студент: %s, присутствует: %s\n", currentPresence.getKey(), currentPresence.getValue() == true ? "да" : "нет");
+            String studentName = currentPresence.getKey();
+            String studentPresence = currentPresence.getValue() == true ? "да" : "нет";
+            System.out.printf("Студент: %s, присутствует: %s\n", studentName, studentPresence);
         }
     }
 
@@ -83,29 +87,4 @@ public class Course {
             presence.replace(studentName, present);
         } else System.out.println("Нет такого ученика\n");
     }
-
-//    public Teacher SetLector(Teacher lector) {
-//        if(lector.GetSubject().equalsIgnoreCase(subject)) {
-//            if(lector.GetStatus()){
-//                System.out.printf("Лектор %s назначен на курс", lector.GetName());
-//                lector.MakeBusy();
-//                return lector;
-//            } else {
-//                System.out.printf("Лектор %s занят", lector.GetName());
-//                return null;
-//            }
-//        } else {
-//            System.out.println("Данный лектор не может вести курс");
-//            return null;
-//        }
-//    }
-//
-//    public void SetLector2(Teacher lector) {
-//        if(lector.GetSubject().equalsIgnoreCase(subject)) {
-//            if(lector.GetStatus()){
-//                this.lector = lector;
-//                System.out.printf("Лектор %s назначен на курс", lector.GetName());
-//            } else System.out.printf("Лектор %s занят", lector.GetName());
-//        } else System.out.println("Данный лектор не может вести курс");
-//    }
 }

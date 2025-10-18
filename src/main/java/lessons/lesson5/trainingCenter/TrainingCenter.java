@@ -15,10 +15,6 @@ public class TrainingCenter {
         teachers.add(new Teacher("James", "Biology", false));
     }
 
-    public void addTeacher(Teacher teacher) {
-        teachers.add(teacher);
-    }
-
     public void setStudents() {
         students.add(new Student("Michael", "Math",  true));
         students.add(new Student("Bill", "Biology",  true));
@@ -32,10 +28,6 @@ public class TrainingCenter {
         students.add(new Student("Ryan", "Biology",  false));
     }
 
-    public void addStudent(Student student) {
-        students.add(student);
-    }
-
     public void getCourses() {
         if(courses.isEmpty()) {
             System.out.println("На текущий момент нет активных курсов");
@@ -43,7 +35,9 @@ public class TrainingCenter {
         }
         System.out.println("Список активных курсов: \n");
         for(Course course : courses){
-            System.out.printf("Предмет: %s, Учитель: %s\n", course.getSubject(), course.getLectorName());
+            String courseName = course.getSubject();
+            String lectorName = course.getLectorName();
+            System.out.printf("Предмет: %s, Учитель: %s\n", courseName, lectorName);
         }
     }
 
@@ -102,12 +96,10 @@ public class TrainingCenter {
             return;
         }
 
-        if (!readyToEnrollStudents.isEmpty() && courseTeacher != null){
-            courses.add(new Course(courseSubject, courseTeacher, readyToEnrollStudents));
-            courseTeacher.makeBusy();
-            for (Student student : readyToEnrollStudents) {
-                student.enroll();
-            }
+        courses.add(new Course(courseSubject, courseTeacher, readyToEnrollStudents));
+        courseTeacher.makeBusy();
+        for (Student student : readyToEnrollStudents) {
+            student.enroll();
         }
     }
 

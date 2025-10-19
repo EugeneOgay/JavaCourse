@@ -1,15 +1,18 @@
-package main.java.lessons.lesson6;
+package main.java.lessons.lesson6and7;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Airplane {
     private ArrayList<Seat> seats = new ArrayList<>();
-    private final ArrayList<Passenger> passengers = new ArrayList<>();
+    private ArrayList<Passenger> passengers = new ArrayList<>();
+    private LocalDateTime timeOfDeparture;
 
     public void setPassengers() {
         passengers.add(new Passenger("Tom"));
@@ -19,12 +22,17 @@ public class Airplane {
         passengers.add(new Passenger("Dylan"));
     }
 
+    public void setTimeOfDeparture(LocalDateTime timeOfDeparture) throws Exception {
+        if(timeOfDeparture.isBefore(LocalDateTime.now())) throw new Exception("Время вылета не может быть прошедшей даты");
+        this.timeOfDeparture = timeOfDeparture;
+    }
+
     private void setEmptyPlaceSeats() {
         //Business class seats
         for(int row = 1; row <= BusinessClassSeat.rows; row++){
             for (String section : BusinessClassSeat.sections) {
                 try {
-                    seats.add(new BusinessClassSeat(row, section, false, null));
+                    seats.add(new BusinessClassSeat(row, section, Status.VACANT, null, null));
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                     e.printStackTrace();
@@ -36,7 +44,7 @@ public class Airplane {
         for(int row = 6; row <= EconomyClassSeat.rows + 5; row++){
             for (String section : EconomyClassSeat.sections) {
                 try {
-                    seats.add(new EconomyClassSeat(row, section, false, null));
+                    seats.add(new EconomyClassSeat(row, section, Status.VACANT, null, null));
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                     e.printStackTrace();
@@ -47,11 +55,11 @@ public class Airplane {
 
     public void setDefaultStateSeats() {
         setEmptyPlaceSeats();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/lessons/lesson6/booking.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/lessons/lesson6and7/booking.txt"))) {
             for (Seat seat : seats) {
                 String line = seat.getNumber() + seat.getSection() + "," +
                     seat.getSeatClass() + "," +
-                    (!seat.isBooked() ? "FREE" : "BOOKED") + "," + "";
+                    seat.getStatus().toString() + "," + "";
                 writer.write(line);
                 writer.newLine();
             }
@@ -61,12 +69,13 @@ public class Airplane {
     }
 
     private void rewriteFile() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/lessons/lesson6/booking.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/lessons/lesson6and7/booking.txt"))) {
             for (Seat seat : seats) {
                 String line = seat.getNumber() + seat.getSection() + "," +
                     seat.getSeatClass() + "," +
-                    (!seat.isBooked() ? "FREE" : "BOOKED") + "," +
-                (seat.getPassenger() == null ? "" : seat.getPassengerName());
+                    seat.getStatus().toString() + "," +
+                    (seat.getPassenger() == null ? "" : seat.getPassengerName()) + "," +
+                    (seat.getTimeOfBooking() == null ? "" : seat.getTimeOfBooking().toString());
                 writer.write(line);
                 writer.newLine();
             }
@@ -77,7 +86,7 @@ public class Airplane {
 
 private void loadFromFile() {
     ArrayList<Seat> loadedSeats = new ArrayList<>();
-    try (BufferedReader reader = new BufferedReader(new FileReader("src/main/java/lessons/lesson6/booking.txt"))) {
+    try (BufferedReader reader = new BufferedReader(new FileReader("src/main/java/lessons/lesson6and7/booking.txt"))) {
         String line;
         while ((line = reader.readLine()) != null) {
             String[] parts = line.split(",");
@@ -85,7 +94,7 @@ private void loadFromFile() {
             int row = Integer.parseInt(numberAndSection.replaceAll("\\D", ""));
             String section = String.valueOf(numberAndSection.replaceAll("\\d", "").charAt(0));
             String seatClass = parts[1];
-            boolean isBooked = parts[2].equals("BOOKED");
+            Status status = Status.valueOf(parts[2]);
             Passenger passenger = null;
             if(parts.length > 3) {
                 for(Passenger pas : passengers) {
@@ -95,10 +104,14 @@ private void loadFromFile() {
                     }
                 }
             }
+            LocalDateTime bookingTime = null;
+            if(parts.length > 4) {
+                bookingTime = LocalDateTime.parse(parts[4]);
+            }
 
             Seat seat = seatClass.equalsIgnoreCase("Business") ?
-                new BusinessClassSeat(row, section, isBooked, passenger) :
-                new EconomyClassSeat(row, section, isBooked, passenger);
+                new BusinessClassSeat(row, section, status, passenger, bookingTime) :
+                new EconomyClassSeat(row, section, status, passenger, bookingTime);
             loadedSeats.add(seat);
         }
     } catch (IOException e) {
@@ -108,9 +121,11 @@ private void loadFromFile() {
         e.printStackTrace();
     }
     seats = loadedSeats;
+    checkBookingTime();
+    rewriteFile();
 }
 
-    public void Reserve(String passengerName, String numberAndSection, String seatClass) {
+    public void reserve(String passengerName, String numberAndSection, String seatClass) {
         loadFromFile();
         int row = Integer.parseInt(numberAndSection.replaceAll("\\D", ""));
         String section = String.valueOf(numberAndSection.replaceAll("\\d", "").charAt(0));
@@ -140,6 +155,7 @@ private void loadFromFile() {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+        seat.setTimeOfBooking(LocalDateTime.now());
         rewriteFile();
         System.out.printf("Место %s заброванировано на имя %s", numberAndSection, passengerName);
     }
@@ -150,22 +166,23 @@ private void loadFromFile() {
         String section = String.valueOf(numberAndSection.replaceAll("\\d", "").charAt(0));
 
         Seat seat = seats.stream().filter(s -> s.getNumber() == row && s.getSection().equalsIgnoreCase(section)
-            && s.getSeatClass().equalsIgnoreCase(seatClass) && s.getPassengerName().
-            equalsIgnoreCase(passengerName)).findFirst().orElse(null);
+            && s.getSeatClass().equalsIgnoreCase(seatClass) ).findFirst().orElse(null);
         if (seat == null) {
             System.out.printf("Нет места с номером %s, секцией %s и класса %s", row, section, seatClass);
             return;
         }
-
-        if(!seat.isBooked()) {
+        if(seat.getStatus() == Status.VACANT) {
             System.out.printf("Место %s класса %s не занято", numberAndSection, seatClass);
             return;
         }
-        if (seat.isBooked() && !seat.getPassenger().getName().equalsIgnoreCase(passengerName)) {
+        if(seat.getStatus() == Status.BOUGHT) {
+            System.out.println("Купленный билет нельзя отменить");
+            return;
+        }
+        if (seat.getStatus() == Status.BOOKED && !seat.getPassenger().getName().equalsIgnoreCase(passengerName)) {
             System.out.println("Место забронировано другим пассажиром и вы не можете снять бронь");
-        } else if (seat.isBooked() && seat.getPassengerName().equalsIgnoreCase(passengerName)) {
+        } else {
             seat.cancelBooking();
-            seat.setPassenger(null);
             rewriteFile();
             System.out.printf("Бронь места %s на имя %s снята", numberAndSection, passengerName);
         }
@@ -181,22 +198,39 @@ private void loadFromFile() {
             System.out.printf("Нет места с номером %s и секцией %s", row, section);
             return;
         }
-        if (!seat.isBooked()) {
-            System.out.printf("Ряд: %d, секция: %s, класс: %s, статус: свободно\n",
+        switch (seat.getStatus()) {
+            case Status.VACANT -> System.out.printf("Ряд: %d, секция: %s, класс: %s, статус: свободно\n",
                 row, section, seat.getSeatClass());
-        } else System.out.printf("Ряд: %d, секция: %s, класс: %s, статус: занято, пассажир: %s\n",
-            row, section, seat.getSeatClass(), seat.getPassengerName());
+            case Status.BOOKED -> System.out.printf("Ряд: %d, секция: %s, класс: %s, статус: забронировано, пассажир: %s\n",
+                row, section, seat.getSeatClass(), seat.getPassengerName());
+            default -> System.out.printf("Ряд: %d, секция: %s, класс: %s, статус: куплено, пассажир: %s\n",
+                row, section, seat.getSeatClass(), seat.getPassengerName());
+        }
     }
 
     public void showAllSeats() {
         loadFromFile();
         System.out.println("Статус по местам: \n");
         for(Seat seat : seats){
-            if (!seat.isBooked()) {
-                System.out.printf("Ряд: %d, секция: %s, класс: %s, статус: свободно\n",
+            switch (seat.getStatus()) {
+                case Status.VACANT -> System.out.printf("Ряд: %d, секция: %s, класс: %s, статус: свободно\n",
                     seat.getNumber(), seat.getSection(), seat.getSeatClass());
-            } else System.out.printf("Ряд: %d, секция: %s, класс: %s, статус: занято, пассажир: %s\n",
-                seat.getNumber(), seat.getSection(), seat.getSeatClass(), seat.getPassengerName());
+                case Status.BOOKED -> System.out.printf("Ряд: %d, секция: %s, класс: %s, статус: забронировано, пассажир: %s\n",
+                    seat.getNumber(), seat.getSection(), seat.getSeatClass(), seat.getPassengerName());
+                default -> System.out.printf("Ряд: %d, секция: %s, класс: %s, статус: куплено, пассажир: %s\n",
+                    seat.getNumber(), seat.getSection(), seat.getSeatClass(), seat.getPassengerName());
+            }
+        }
+    }
+
+    private void checkBookingTime() {
+        for(Seat seat : seats) {
+            if(seat.getTimeOfBooking() != null){
+                Duration difference = Duration.between(LocalDateTime.now(), seat.getTimeOfBooking());
+                if (seat.getStatus() == Status.BOOKED && difference.toMinutes() > 24) {
+                    seat.cancelBooking();
+                }
+            }
         }
     }
 }

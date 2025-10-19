@@ -1,7 +1,7 @@
-package main.java.lessons.lesson6;
+package main.java.lessons.lesson6and7;
 
 public class Passenger {
-    private final String name;
+    private String name;
 
     public Passenger(String name) {
         this.name = name;

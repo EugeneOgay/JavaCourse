@@ -10,8 +10,9 @@ import main.java.lessons.lesson3.Person;
 import main.java.lessons.lesson3.Rectangle;
 import main.java.lessons.lesson3.StreetFighter;
 import main.java.lessons.lesson5.trainingCenter.TrainingCenter;
-import main.java.lessons.lesson6.Airplane;
+import main.java.lessons.lesson6and7.Airplane;
 
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class MainClass {
@@ -215,9 +216,7 @@ public class MainClass {
                         trainingCenter.markPresence("Math", "Dave", "Andrew", true);
                         trainingCenter.getCourseInfo("Math", "Dave");
                     }
-                    case 2 -> {
-                        System.out.println("Не успел сделать");
-                    }
+                    case 2 -> System.out.println("Не успел сделать");
 
                     default -> System.out.print("Нет задания под этим номером");
                 }
@@ -227,15 +226,34 @@ public class MainClass {
                     "Консольное приложение для бронирования авиабилетов \n"
                 );
                 Airplane airplane = new Airplane();
-                //airplane.setEmptyPlaceSeats();
-                //airplane.setDefaultStateSeats();
+                airplane.setTimeOfDeparture(LocalDateTime.of(2025, 10, 19, 23, 30));
+                airplane.setDefaultStateSeats();
                 airplane.setPassengers();
-                airplane.Reserve("Dylan", "4F", "Business");
+                airplane.reserve("Dylan", "4F", "Business");
                 airplane.cancelReservation("Dylan", "4F", "Business");
                 airplane.showSeatInfo("5A");
                 airplane.showAllSeats();
             }
-            default -> System.out.print("Нет урока под этим номером");
+            case 7 -> {
+                System.out.println("\nЗадание:\n" +
+                    "Добавить дату вылета, добавить статусы (свободен, забронирован, оплачен)\n" +
+                    "добавить дату и время бронирования\n" +
+                    "статус бронирования держится 24 минуты, если бронь висит больше этого времени, " +
+                    "то при запросе на просмотр мест, сбрасывать такие брони \n"
+                );
+                Airplane airplane = new Airplane();
+                try {
+                    airplane.setTimeOfDeparture(LocalDateTime.of(2025, 10, 19, 23, 30));
+                } catch (IllegalArgumentException e) {
+                    e.getMessage();
+                }
+                airplane.setDefaultStateSeats();
+                airplane.setPassengers();
+                airplane.reserve("Dylan", "4F", "Business");
+                airplane.cancelReservation("Dylan", "4F", "Business");
+                airplane.showSeatInfo("5A");
+                airplane.showAllSeats();
+            }
         }
     }
 }

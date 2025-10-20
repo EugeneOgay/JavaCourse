@@ -1,9 +1,8 @@
 package main.java.lessons.lesson6and7;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-class Seat {
+public class Seat {
     private int number;
     private String section;
     private String seatClass;
@@ -87,8 +86,3 @@ class Seat {
     }
 }
 
-enum Status {
-    VACANT,
-    BOOKED,
-    BOUGHT
-}

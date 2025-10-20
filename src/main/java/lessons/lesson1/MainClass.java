@@ -216,9 +216,7 @@ public class MainClass {
                         trainingCenter.markPresence("Math", "Dave", "Andrew", true);
                         trainingCenter.getCourseInfo("Math", "Dave");
                     }
-                    case 2 -> {
-                        System.out.println("Не успел сделать");
-                    }
+                    case 2 -> System.out.println("Не успел сделать");
 
                     default -> System.out.print("Нет задания под этим номером");
                 }
@@ -246,7 +244,7 @@ public class MainClass {
                 Airplane airplane = new Airplane();
                 try {
                     airplane.setTimeOfDeparture(LocalDateTime.of(2025, 10, 19, 23, 30));
-                } catch (Exception e) {
+                } catch (IllegalArgumentException e) {
                     e.getMessage();
                 }
                 airplane.setDefaultStateSeats();

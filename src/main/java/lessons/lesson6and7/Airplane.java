@@ -22,35 +22,9 @@ public class Airplane {
         passengers.add(new Passenger("Dylan"));
     }
 
-    public void setTimeOfDeparture(LocalDateTime timeOfDeparture) throws Exception {
-        if(timeOfDeparture.isBefore(LocalDateTime.now())) throw new Exception("Время вылета не может быть прошедшей даты");
+    public void setTimeOfDeparture(LocalDateTime timeOfDeparture) {
+        if(timeOfDeparture.isBefore(LocalDateTime.now())) throw new IllegalArgumentException("Время вылета не может быть прошедшей даты");
         this.timeOfDeparture = timeOfDeparture;
-    }
-
-    private void setEmptyPlaceSeats() {
-        //Business class seats
-        for(int row = 1; row <= BusinessClassSeat.rows; row++){
-            for (String section : BusinessClassSeat.sections) {
-                try {
-                    seats.add(new BusinessClassSeat(row, section, Status.VACANT, null, null));
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        //Economy class seats
-        for(int row = 6; row <= EconomyClassSeat.rows + 5; row++){
-            for (String section : EconomyClassSeat.sections) {
-                try {
-                    seats.add(new EconomyClassSeat(row, section, Status.VACANT, null, null));
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
     public void setDefaultStateSeats() {
@@ -118,7 +92,7 @@ private void loadFromFile() {
         System.out.println("Ошибка при чтении файла: " + e.getMessage());
     } catch (Exception e) {
         System.out.println(e.getMessage());
-        e.printStackTrace();
+        System.err.println("Ошибка при создании места: " + e.getMessage());
     }
     seats = loadedSeats;
     checkBookingTime();
@@ -147,17 +121,24 @@ private void loadFromFile() {
             System.out.printf("Нет места с номером %s, секцией %s и класса %s", row, section, seatClass);
             return;
         }
+        if(timeOfDeparture.isBefore(LocalDateTime.now())) throw new IllegalArgumentException("Самолет уже вылетел");
 
-        seat.setPassenger(passenger);
-        try {
+        if(seat.getStatus() == Status.VACANT) {
+            seat.setPassenger(passenger);
             seat.setBooked();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+            seat.setTimeOfBooking(LocalDateTime.now());
+            rewriteFile();
+            System.out.printf("Место %s заброванировано на имя %s", numberAndSection, passengerName);
         }
-        seat.setTimeOfBooking(LocalDateTime.now());
-        rewriteFile();
-        System.out.printf("Место %s заброванировано на имя %s", numberAndSection, passengerName);
+
+        if(seat.getStatus() == Status.BOUGHT) {
+            System.out.println("Это место уже выкуплено");
+            return;
+        }
+
+        if (seat.getStatus() == Status.BOOKED && !seat.getPassenger().getName().equalsIgnoreCase(passengerName)) {
+            System.out.println("Место уже забронировано другим пассажиром");
+        }
     }
 
     public void cancelReservation(String passengerName, String numberAndSection, String seatClass) {
@@ -226,9 +207,31 @@ private void loadFromFile() {
     private void checkBookingTime() {
         for(Seat seat : seats) {
             if(seat.getTimeOfBooking() != null){
-                Duration difference = Duration.between(LocalDateTime.now(), seat.getTimeOfBooking());
+                Duration difference = Duration.between(seat.getTimeOfBooking(), LocalDateTime.now());
                 if (seat.getStatus() == Status.BOOKED && difference.toMinutes() > 24) {
                     seat.cancelBooking();
+                }
+            }
+        }
+    }
+
+    private void setEmptyPlaceSeats() {
+        addSeats(1, BusinessClassSeat.rows, BusinessClassSeat.sections, "Business");
+        addSeats(6, EconomyClassSeat.rows + 5, EconomyClassSeat.sections, "Economy");
+    }
+
+    private void addSeats(int startRow, int rows, String[] sections, String seatClass) {
+        for(int row = startRow; row <= rows; row++){
+            for (String section : sections) {
+                try {
+                    if (seatClass.equals("Business")) {
+                        seats.add(new BusinessClassSeat(row, section, Status.VACANT, null, null));
+                    } else {
+                        seats.add(new EconomyClassSeat(row, section, Status.VACANT, null, null));
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    System.err.println("Ошибка при создании места: " + e.getMessage());
                 }
             }
         }

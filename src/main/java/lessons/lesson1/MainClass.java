@@ -11,6 +11,9 @@ import main.java.lessons.lesson3.Rectangle;
 import main.java.lessons.lesson3.StreetFighter;
 import main.java.lessons.lesson5.trainingCenter.TrainingCenter;
 import main.java.lessons.lesson6and7.Airplane;
+import main.java.lessons.lesson8.DigitalQueue;
+import main.java.lessons.lesson8.Library;
+import main.java.lessons.lesson8.UniqueDigits;
 
 import java.time.LocalDateTime;
 import java.util.Scanner;
@@ -253,6 +256,39 @@ public class MainClass {
                 airplane.cancelReservation("Dylan", "4F", "Business");
                 airplane.showSeatInfo("5A");
                 airplane.showAllSeats();
+            }
+            case 8 -> {
+                System.out.println("\nЗадания:\n" +
+                    "1.Эл. очередь \n" +
+                    "2.Уникальные числа из введенных\n" +
+                    "3.HashMap"
+                );
+
+                System.out.print("Введите номер задания: ");
+                int task = scanner.nextInt();
+                switch (task){
+                    case 1 -> {
+                        DigitalQueue queue = new DigitalQueue();
+                        queue.addUserInQueue("Tom");
+                        queue.addUserInQueue("Bill");
+                        queue.addUserInQueue("Jim");
+                        queue.getCurrentQueue();
+                        queue.processQueue();
+                        queue.getCurrentQueue();
+                    }
+                    case 2 -> {
+                        UniqueDigits uniqueDigits = new UniqueDigits();
+                        uniqueDigits.inputDigits();
+                        uniqueDigits.displayUniqueNumbers();
+                    }
+                    case 3 -> {
+                        Library library = new Library();
+                        library.addBooks();
+                        library.displayAllBooks();
+                    }
+
+                    default -> System.out.print("Нет задания под этим номером");
+                }
             }
         }
     }

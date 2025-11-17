@@ -1,5 +1,9 @@
 package main.java.lessons.lesson1;
 
+import main.java.lessons.lesson11.lesson11task1.MessageQueue;
+import main.java.lessons.lesson11.lesson11task1.Publisher;
+import main.java.lessons.lesson11.lesson11task1.Subscriber;
+import main.java.lessons.lesson11.lesson11task2.SimpleThreadPool;
 import main.java.lessons.lesson2.Lesson2;
 import main.java.lessons.lesson3.BankAccount;
 import main.java.lessons.lesson3.BankSystem;
@@ -285,6 +289,57 @@ public class MainClass {
                         Library library = new Library();
                         library.addBooks();
                         library.displayAllBooks();
+                    }
+
+                    default -> System.out.print("Нет задания под этим номером");
+                }
+            }
+
+            case 11 -> {
+                System.out.println("\nЗадания:\n" +
+                        "1.Реализация паттерна Publisher/Subscriber\n" +
+                        "2.Реализация простого пула потоков\n"
+                );
+
+                System.out.print("Введите номер задания: ");
+                int task = scanner.nextInt();
+
+                switch (task){
+                    case 1 -> {
+                        MessageQueue queue = new MessageQueue();
+                        Thread publisherThread = new Thread(new Publisher(queue));
+                        Thread subscriberThread = new Thread(new Subscriber(queue));
+
+                        publisherThread.start();
+                        subscriberThread.start();
+
+                        try {
+                            publisherThread.join();
+                            subscriberThread.join();
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        }
+
+                        System.out.println("Программа завершена.");
+                    }
+                    case 2 -> {
+                        SimpleThreadPool pool = new SimpleThreadPool(5);
+
+                        for (int i = 1; i <= 20; i++) {
+                            int taskNum = i;
+                            pool.submit(() -> {
+                                System.out.println(Thread.currentThread().getName() +
+                                        " выполняет задачу " + taskNum);
+
+                                try {
+                                    Thread.sleep(500);
+                                } catch (InterruptedException e) {
+                                    Thread.currentThread().interrupt();
+                                }
+                            });
+                        }
+
+                        pool.shutdown();
                     }
 
                     default -> System.out.print("Нет задания под этим номером");
